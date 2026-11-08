@@ -1,0 +1,218 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Times New Roman", Times, serif;
+    background-color: white;
+    padding: 20px;
+    line-height: 20px;
+    color: black;
+}
+
+.container {
+    width: 1100px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: blue;
+    padding: 10px;
+    margin: 20px 0px;
+}
+
+.navbar p {
+    display: inline-block;
+    margin: 5px 10px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.navbar a:hover {
+    background-color: darkblue;
+    color: white;
+    text-decoration: underline;
+}
+
+h1 {
+    color: blue;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+h2 {
+    color: blue;
+    font-size: 25px;
+    margin: 20px 0px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid blue;
+}
+
+h3 {
+    color: blue;
+    font-size: 20px;
+    margin: 15px 0px;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+fieldset {
+    border: 1px solid blue;
+    padding: 20px;
+    margin-bottom: 25px;
+    background-color: white;
+}
+
+legend {
+    background-color: blue;
+    padding: 5px 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0px;
+}
+
+th {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid blue;
+}
+
+td {
+    padding: 8px;
+    border: 1px solid #b8b8b8;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f6ff;
+}
+
+tr:hover {
+    background-color: #e6edff;
+}
+
+label {
+    display: inline-block;
+    color: black;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+input,
+select,
+textarea {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
+    padding: 8px;
+    margin: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+    width: 300px;
+    border: 1px solid blue;
+}
+
+textarea {
+    height: 100px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin: 6px;
+}
+
+input[type="submit"],
+input[type="reset"],
+button {
+    background-color: blue;
+    color: white;
+    border: 1px solid blue;
+    padding: 8px 15px;
+    font-size: 16px;
+    font-family: "Times New Roman", Times, serif;
+    cursor: pointer;
+    margin: 8px 5px;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: darkblue;
+}
+
+input[type="reset"] {
+    background-color: red;
+    border: 1px solid red;
+}
+
+input[type="reset"]:hover {
+    background-color: darkred;
+}
+
+a {
+    color: blue;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 8px;
+    }
+
+    .container {
+        width: auto;
+        padding: 10px;
+    }
+
+    .navbar {
+        justify-content: center;
+    }
+
+    .navbar p {
+        margin: 5px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+        width: 90%;
+    }
+}

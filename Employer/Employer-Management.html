@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Employer management for posting jobs, interviews, committee reviews, and skill matching">
+    <title>Employer Management | JobPortal</title>
+    <link rel="stylesheet" href="employer.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Employer Portal - Management</h1>
+
+        <div class="navbar">
+            <p><a href="Employer-Dashboard.html">Dashboard</a></p>
+            <p><a href="Employer-Management.html">Management</a></p>
+            <p><a href="Employer-Profile.html">Profile</a></p>
+        </div>
+
+        <section>
+            <h2>Post a Job</h2>
+            <fieldset>
+                <legend>Job Vacancy Form</legend>
+                <form method="post" action="#">
+                    <table>
+                        <tr>
+                            <td><label for="title">Job Title:</label></td>
+                            <td><input type="text" id="title" name="title" placeholder="Job title"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="location">Location:</label></td>
+                            <td><input type="text" id="location" name="location" placeholder="Location"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobType">Job Type:</label></td>
+                            <td>
+                                <select id="jobType" name="jobType">
+                                    <option value="">Select Job Type</option>
+                                    <option value="full-time">Full Time</option>
+                                    <option value="part-time">Part Time</option>
+                                    <option value="internship">Internship</option>
+                                    <option value="remote">Remote</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="salary">Salary:</label></td>
+                            <td><input type="text" id="salary" name="salary" placeholder="Salary"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="description">Job Description:</label></td>
+                            <td><textarea id="description" name="description" placeholder="Job description"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="requirements">Requirements:</label></td>
+                            <td><textarea id="requirements" name="requirements" placeholder="Requirements"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="deadline">Application Deadline:</label></td>
+                            <td><input type="date" id="deadline" name="deadline"></td>
+                        </tr>
+                    </table>
+                    <input type="submit" value="Post Job">
+                    <input type="reset" value="Reset">
+                </form>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Interview Schedules</h2>
+            <fieldset>
+                <legend>Schedule Details</legend>
+                <table>
+                    <tr>
+                        <td><label for="candidateName">Candidate Name:</label></td>
+                        <td><input type="text" id="candidateName" placeholder="Candidate name"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="interviewDate">Interview Date:</label></td>
+                        <td><input type="date" id="interviewDate"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="interviewMode">Mode:</label></td>
+                        <td><input type="text" id="interviewMode" placeholder="Online / In-person"></td>
+                    </tr>
+                </table>
+                <button type="button">Confirm Slot</button>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Candidate Feedback</h2>
+            <fieldset>
+                <legend>Feedback Form</legend>
+                <table>
+                    <tr>
+                        <td><label for="feedbackCandidate">Candidate:</label></td>
+                        <td><input type="text" id="feedbackCandidate" placeholder="Applicant name"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="rating">Rating:</label></td>
+                        <td><input type="text" id="rating" placeholder="1-5 stars"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="comments">Comments:</label></td>
+                        <td><textarea id="comments" placeholder="Evaluation notes"></textarea></td>
+                    </tr>
+                </table>
+                <button type="button">Submit Feedback</button>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Hiring Committee Consensus</h2>
+            <fieldset>
+                <legend>Committee Evaluation Matrix</legend>
+                <table>
+                    <tr>
+                        <td><label for="evalCandidate">Target Candidate:</label></td>
+                        <td><input type="text" id="evalCandidate" placeholder="Select candidate"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="techScore">Technical Panel Score:</label></td>
+                        <td><input type="text" id="techScore" value="4.8 / 5.0" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for="cultureScore">Culture Fit Score:</label></td>
+                        <td><input type="text" id="cultureScore" value="4.2 / 5.0" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for="reviewerNotes">Consensus Notes:</label></td>
+                        <td><textarea id="reviewerNotes"
+                                readonly>Panel agrees on strong problem-solving ability. Pending final compensation alignment.</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="panelStatus">Recommendation:</label></td>
+                        <td><input type="text" id="panelStatus" value="Strong Buy / Proceed to Offer" readonly></td>
+                    </tr>
+                </table>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Skill-Matching Engine</h2>
+            <fieldset>
+                <legend>Automated Match Criteria</legend>
+                <table>
+                    <tr>
+                        <td><label for="matchThreshold">Match Threshold Cutoff:</label></td>
+                        <td><input type="text" id="matchThreshold" value="85% Minimum Score" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for="skillWeights">Core Skill Weighting:</label></td>
+                        <td><input type="text" id="skillWeights" value="Primary Skills (60%), Experience (40%)"
+                                readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for="topApplicantMatch">Top Auto-Ranked Candidate:</label></td>
+                        <td><input type="text" id="topApplicantMatch" value="John Doe - 94% Compatibility" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="autoBracket">Automated Classification:</label></td>
+                        <td><input type="text" id="autoBracket" value="Tier-1 High Priority Shortlist" readonly></td>
+                    </tr>
+                </table>
+            </fieldset>
+        </section>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Employer dashboard for analytics, conversion funnels, and announcements">
+    <title>Employer Dashboard | JobPortal</title>
+    <link rel="stylesheet" href="employer.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Employer Portal - Dashboard</h1>
+
+        <div class="navbar">
+            <p><a href="Employer-Dashboard.html">Dashboard</a></p>
+            <p><a href="Employer-Management.html">Management</a></p>
+            <p><a href="Employer-Profile.html">Profile</a></p>
+        </div>
+
+        <section>
+            <h2>Dashboard Overview</h2>
+            <fieldset>
+                <legend>Activity Summary</legend>
+                <table>
+                    <tr>
+                        <td><label for="lastLogin">Last Login:</label></td>
+                        <td><input type="text" id="lastLogin" value="Today, 09:30 AM" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for="pendingReviews">Pending Reviews:</label></td>
+                        <td><input type="text" id="pendingReviews" value="5 New Applications" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for="activeCampaigns">Active Campaigns:</label></td>
+                        <td><input type="text" id="activeCampaigns" value="3 Open Listings" readonly></td>
+                    </tr>
+                </table>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Job Statistics</h2>
+            <fieldset>
+                <legend>Metrics Overview</legend>
+                <table>
+                    <tr>
+                        <td><label for="activeJobsCount">Active Jobs:</label></td>
+                        <td><input type="text" id="activeJobsCount" value="3"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="totalApplicantsCount">Total Applicants:</label></td>
+                        <td><input type="text" id="totalApplicantsCount" value="120"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="shortlistedCount">Shortlisted Candidates:</label></td>
+                        <td><input type="text" id="shortlistedCount" value="20"></td>
+                    </tr>
+                </table>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Pipeline Conversion & Funnel Simulation</h2>
+            <fieldset>
+                <legend>Recruitment Funnel Metrics</legend>
+                <table>
+                    <tr>
+                        <td><label for="applicationToScreen">Application-to-Screen Ratio:</label></td>
+                        <td><input type="text" id="applicationToScreen" value="68% Conversion (120 -> 82)" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="screenToInterview">Screen-to-Interview Conversion:</label></td>
+                        <td><input type="text" id="screenToInterview" value="25% Conversion (82 -> 20)" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for="offerAcceptance">Offer Acceptance Yield:</label></td>
+                        <td><input type="text" id="offerAcceptance" value="85% Acceptance Rate" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for="estTimeToHire">Simulated Time-to-Hire Forecast:</label></td>
+                        <td><input type="text" id="estTimeToHire" value="18 Days (4 days faster than average)" readonly>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>System Announcements</h2>
+            <fieldset>
+                <legend>Notifications</legend>
+                <table>
+                    <tr>
+                        <td><label for="noticeTitle">Notice Title:</label></td>
+                        <td><input type="text" id="noticeTitle" value="System Upgrade Notice"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="noticeDate">Date Posted:</label></td>
+                        <td><input type="date" id="noticeDate" value="2026-11-04"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="noticeDetails">Details:</label></td>
+                        <td><textarea
+                                id="noticeDetails">The job portal matching algorithm has been upgraded for improved candidate sorting accuracy.</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </section>
+    </div>
+
+</body>
+
+</html>

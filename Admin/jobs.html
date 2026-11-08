@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Management - Job Portal Management System</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <p><a href="dashboard.html">Dashboard</a></p>
+        <p><a href="users.html">Manage Users</a></p>
+        <p><a href="jobs.html">Manage Jobs</a></p>
+        <p><a href="applications.html">Applications</a></p>
+        <p><a href="employer-verification.html">Employer Verification</a></p>
+        <p><a href="categories.html">Categories</a></p>
+        <p><a href="reports.html">Reports</a></p>
+        <p><a href="suspicious-jobs.html">Suspicious Jobs</a></p>
+        <p><a href="duplicate-jobs.html">Duplicate Jobs</a></p>
+        <p><a href="announcements.html">Announcements</a></p>
+        <p><a href="profile.html">Update Profile</a></p>
+        <p><a href="logout.html">Logout</a></p>
+    </div>
+
+    <div class="container">
+        <h1>Job Management</h1>
+        <section id="jobs">
+            
+
+            <fieldset>
+                <legend>Add Job Posting (Create)</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <td><label for="jobTitle">Job Title:</label></td>
+                            <td><input type="text" id="jobTitle" name="jobTitle" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobEmployer">Employer ID:</label></td>
+                            <td><input type="number" id="jobEmployer" name="jobEmployer" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobCategory">Category:</label></td>
+                            <td><input type="text" id="jobCategory" name="jobCategory" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobLocation">Location:</label></td>
+                            <td><input type="text" id="jobLocation" name="jobLocation"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobDescription">Job Description:</label></td>
+                            <td><textarea id="jobDescription" name="jobDescription" rows="5" cols="35"
+                                    required></textarea></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="submit" name="addJob" value="Add Job">
+                                <input type="reset" value="Reset">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </fieldset>
+
+            <fieldset>
+                <legend>Job Details (Read)</legend>
+                <table>
+                    <tr>
+                        <th>Job ID</th>
+                        <th>Job Title</th>
+                        <th>Employer</th>
+                        <th>Posted Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td colspan="6">Job information will appear here.</td>
+                    </tr>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend>Update Job Posting (Update)</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <td><label for="editJobId">Job ID:</label></td>
+                            <td><input type="number" id="editJobId" name="editJobId" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="editJobTitle">Job Title:</label></td>
+                            <td><input type="text" id="editJobTitle" name="editJobTitle"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="editJobDescription">Job Description:</label></td>
+                            <td><textarea id="editJobDescription" name="editJobDescription" rows="5"
+                                    cols="35"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label for="editJobStatus">Job Status:</label></td>
+                            <td>
+                                <select id="editJobStatus" name="editJobStatus">
+                                    <option value="active">Active</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="rejected">Rejected</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="submit" name="updateJob" value="Update Job"></td>
+                        </tr>
+                    </table>
+                </form>
+            </fieldset>
+
+            <fieldset>
+                <legend>Delete Job Posting (Delete)</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <td><label for="deleteJobId">Job ID:</label></td>
+                            <td><input type="number" id="deleteJobId" name="deleteJobId" required></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="submit" name="deleteJob" value="Delete Job"></td>
+                        </tr>
+                    </table>
+                </form>
+            </fieldset>
+
+            
+            <fieldset>
+                <legend>Job Posting Approval</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <td><label for="approvalJobId">Job ID:</label></td>
+                            <td><input type="number" id="approvalJobId" name="approvalJobId" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="approvalStatus">Decision:</label></td>
+                            <td>
+                                <select id="approvalStatus" name="approvalStatus">
+                                    <option value="approved">Approve</option>
+                                    <option value="rejected">Reject</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="submit" name="reviewJob" value="Submit Decision"></td>
+                        </tr>
+                    </table>
+                </form>
+            </fieldset>
+        </section>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

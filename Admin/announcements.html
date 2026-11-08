@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform-Wide Announcements - Job Portal Management System</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <p><a href="dashboard.html">Dashboard</a></p>
+        <p><a href="users.html">Manage Users</a></p>
+        <p><a href="jobs.html">Manage Jobs</a></p>
+        <p><a href="applications.html">Applications</a></p>
+        <p><a href="employer-verification.html">Employer Verification</a></p>
+        <p><a href="categories.html">Categories</a></p>
+        <p><a href="reports.html">Reports</a></p>
+        <p><a href="suspicious-jobs.html">Suspicious Jobs</a></p>
+        <p><a href="duplicate-jobs.html">Duplicate Jobs</a></p>
+        <p><a href="announcements.html">Announcements</a></p>
+        <p><a href="profile.html">Update Profile</a></p>
+        <p><a href="logout.html">Logout</a></p>
+    </div>
+
+    <div class="container">
+        <h1>Platform-Wide Announcements</h1>
+        <section id="announcements">
+            
+            <fieldset>
+                <legend>Publish Announcement</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <td><label for="announcementTitle">Announcement Title:</label></td>
+                            <td><input type="text" id="announcementTitle" name="announcementTitle" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="announcementMessage">Message:</label></td>
+                            <td><textarea id="announcementMessage" name="announcementMessage" rows="5" cols="35"
+                                    required></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label for="announcementAudience">Audience:</label></td>
+                            <td>
+                                <select id="announcementAudience" name="announcementAudience">
+                                    <option value="all">All Users</option>
+                                    <option value="job_seekers">Job Seekers</option>
+                                    <option value="employers">Employers</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="submit" name="publishAnnouncement"
+                                    value="Publish Announcement"></td>
+                        </tr>
+                    </table>
+                </form>
+            </fieldset>
+        </section>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

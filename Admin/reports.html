@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports and Analytics - Job Portal Management System</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <p><a href="dashboard.html">Dashboard</a></p>
+        <p><a href="users.html">Manage Users</a></p>
+        <p><a href="jobs.html">Manage Jobs</a></p>
+        <p><a href="applications.html">Applications</a></p>
+        <p><a href="employer-verification.html">Employer Verification</a></p>
+        <p><a href="categories.html">Categories</a></p>
+        <p><a href="reports.html">Reports</a></p>
+        <p><a href="suspicious-jobs.html">Suspicious Jobs</a></p>
+        <p><a href="duplicate-jobs.html">Duplicate Jobs</a></p>
+        <p><a href="announcements.html">Announcements</a></p>
+        <p><a href="profile.html">Update Profile</a></p>
+        <p><a href="logout.html">Logout</a></p>
+    </div>
+
+    <div class="container">
+        <h1>Reports and Analytics</h1>
+        <section id="reports">
+            
+            <fieldset>
+                <legend>Generate System Reports</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <td><label for="reportType">Report Type:</label></td>
+                            <td>
+                                <select id="reportType" name="reportType">
+                                    <option value="users">User Report</option>
+                                    <option value="jobs">Job Posting Report</option>
+                                    <option value="applications">Application Report</option>
+                                    <option value="employers">Employer Report</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="reportFrom">From Date:</label></td>
+                            <td><input type="date" id="reportFrom" name="reportFrom"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="reportTo">To Date:</label></td>
+                            <td><input type="date" id="reportTo" name="reportTo"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="submit" name="generateReport" value="Generate Report"></td>
+                        </tr>
+                    </table>
+                </form>
+            </fieldset>
+        </section>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

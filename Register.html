@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Job Recruitment Portal</h1>
+        <h2>Signup</h2>
+
+        <form method="post" action="">
+            <fieldset>
+                <legend>User Information</legend>
+
+                <table>
+                    <tr>
+                        <td><label for="name">Full Name:</label></td>
+                        <td>
+                            <input type="text" id="name" name="name" placeholder="Enter your Name" required>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="email">Email:</label></td>
+                        <td>
+                            <input type="email" id="email" name="email" placeholder="Enter your Email" required>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="password">Password:</label></td>
+                        <td>
+                            <input type="password" id="password" name="password" placeholder="Enter your Password"
+                                required>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="confirmPassword">Confirm Password:</label></td>
+                        <td>
+                            <input type="password" id="confirmPassword" name="confirmPassword"
+                                placeholder="Confirm your Password" required>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Account Type:</td>
+                        <td>
+                            <input type="radio" id="jobSeeker" name="role" value="job_seeker" required>
+                            <label for="jobSeeker">Job Seeker</label>
+
+                            <input type="radio" id="employer" name="role" value="employer">
+                            <label for="employer">Employer</label>
+                        </td>
+                    </tr>
+                </table>
+
+                <input type="checkbox" id="condition" name="condition" value="1" required>
+                <label for="condition">I Agree to the Terms and Conditions</label>
+
+                <br><br>
+
+                <input type="submit" id="signup" name="signup" value="Signup">
+                <input type="reset" id="reset" name="reset" value="Reset">
+            </fieldset>
+        </form>
+
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+</body>
+
+</html>

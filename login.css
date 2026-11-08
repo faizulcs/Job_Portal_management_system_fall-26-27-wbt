@@ -1,0 +1,119 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: white;
+    padding: 20px;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 650px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+}
+
+h1 {
+    color: blue;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 26px;
+}
+
+h2 {
+    padding-bottom: 10px;
+    color: black;
+}
+
+form {
+    display: flex;
+}
+
+fieldset {
+    width: 100%;
+    padding: 30px;
+    margin-bottom: 30px;
+    background-color: white;
+}
+
+legend {
+    background-color: blue;
+    padding: 0 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    padding: 6px;
+}
+
+label {
+    display: block;
+    color: black;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #999;
+    background-color: white;
+    font-size: 14px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+input[type="checkbox"] {
+    margin: 5px;
+}
+
+input[type="submit"] {
+    background-color: blue;
+    width: 20%;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+input[type="reset"] {
+    width: 20%;
+    background-color: grey;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: darkblue;
+}
+
+input[type="reset"]:hover {
+    background-color: #555;
+}
+
+a {
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

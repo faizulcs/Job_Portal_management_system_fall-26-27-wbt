@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage job openings on the JobPortal">
+  <title>Manage Jobs | JobPortal</title>
+  <link rel="stylesheet" href="recruitment-manager.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="../login.html" class="logo">Job<span>Portal</span></a>
+    <div class="user-info">
+      <span class="badge recruiter">Recruitment Manager</span>
+      <span>Welcome, Nusrat Jahan</span>
+      <a href="../login.html" class="btn btn-small btn-light">Logout</a>
+    </div>
+  </header>
+
+  <nav class="topnav">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="applications.html">Review Applications</a>
+    <a href="shortlist.html">Shortlist</a>
+    <a href="interviews.html">Interviews</a>
+    <a href="jobs.html" class="active">Manage Jobs</a>
+  </nav>
+
+  <main class="container">
+
+    <!-- jobs: add, edit, open/close, delete -->
+    <section id="jobSection" class="page-section">
+      <h2 class="page-title">Manage Jobs</h2>
+      <p class="page-subtitle">Create, edit, open, close and delete the job openings you recruit for.</p>
+
+      <div id="jobMessage" class="message"></div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <h3 id="jobFormTitle">Add New Job</h3>
+            <form id="jobForm" onsubmit="return saveJob()">
+              <fieldset>
+                <legend>Job Details</legend>
+                <table class="form-table">
+                  <tr>
+                    <td><label for="jobTitle">Title:</label></td>
+                    <td><input type="text" id="jobTitle" placeholder="Job title"><span class="error" id="jobTitleError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="jobDepartment">Department:</label></td>
+                    <td>
+                      <select id="jobDepartment">
+                        <option value="">-- Select Department --</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Design">Design</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Human Resources">Human Resources</option>
+                      </select>
+                      <span class="error" id="jobDepartmentError"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label for="jobLocation">Location:</label></td>
+                    <td><input type="text" id="jobLocation" placeholder="e.g. Dhaka"><span class="error" id="jobLocationError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="jobType">Type:</label></td>
+                    <td>
+                      <select id="jobType">
+                        <option value="">-- Select Type --</option>
+                        <option value="Full Time">Full Time</option>
+                        <option value="Part Time">Part Time</option>
+                        <option value="Internship">Internship</option>
+                        <option value="Remote">Remote</option>
+                      </select>
+                      <span class="error" id="jobTypeError"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label for="jobVacancies">Vacancies:</label></td>
+                    <td><input type="number" id="jobVacancies" min="1" max="50" placeholder="1 - 50"><span class="error" id="jobVacanciesError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="jobDeadline">Deadline:</label></td>
+                    <td><input type="date" id="jobDeadline"><span class="error" id="jobDeadlineError"></span></td>
+                  </tr>
+                  <tr>
+                    <td>Status:</td>
+                    <td>
+                      <input type="radio" id="jobStatusOpen" name="jobStatus" value="Open" checked>
+                      <label for="jobStatusOpen" class="option-label">Open</label>
+                      <input type="radio" id="jobStatusClosed" name="jobStatus" value="Closed">
+                      <label for="jobStatusClosed" class="option-label">Closed</label>
+                    </td>
+                  </tr>
+                </table>
+              </fieldset>
+              <input type="submit" id="jobSaveButton" class="btn" value="Add Job">
+              <button type="button" class="btn btn-secondary" onclick="resetJobForm()">Cancel</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-wide">
+          <div class="card">
+            <h3>Job Openings</h3>
+            <div class="search-bar">
+              <input type="text" id="jobSearch" placeholder="Search by title, department or id..." onkeyup="renderJobs()">
+              <select id="jobStatusFilter" onchange="renderJobs()">
+                <option value="All">All statuses</option>
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </div>
+            <p class="result-count" id="jobCount"></p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>ID</th><th>Job</th><th>Type / Location</th><th>Vacancies</th><th>Deadline</th><th>Applicants</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="jobBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    &copy; 2026 JobPortal &middot; Recruitment Manager &middot; CSC 3215 Web Technologies
+  </footer>
+
+  <script src="recruitment-manager.js"></script>
+</body>
+</html>

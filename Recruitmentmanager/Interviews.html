@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interview schedule on the JobPortal">
+  <title>Interview Schedule | JobPortal</title>
+  <link rel="stylesheet" href="recruitment-manager.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="../login.html" class="logo">Job<span>Portal</span></a>
+    <div class="user-info">
+      <span class="badge recruiter">Recruitment Manager</span>
+      <span>Welcome, Nusrat Jahan</span>
+      <a href="../login.html" class="btn btn-small btn-light">Logout</a>
+    </div>
+  </header>
+
+  <nav class="topnav">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="applications.html">Review Applications</a>
+    <a href="shortlist.html">Shortlist</a>
+    <a href="interviews.html" class="active">Interviews</a>
+    <a href="jobs.html">Manage Jobs</a>
+  </nav>
+
+  <main class="container">
+
+    <!-- interviews: add, edit, delete, search -->
+    <section id="interviewSection" class="page-section">
+      <h2 class="page-title">Interview Schedule</h2>
+      <p class="page-subtitle">Schedule interviews for shortlisted candidates. Clashes of time are checked automatically.</p>
+
+      <div id="interviewMessage" class="message"></div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <h3 id="interviewFormTitle">Schedule Interview</h3>
+            <form id="interviewForm" onsubmit="return saveInterview()">
+              <fieldset>
+                <legend>Interview Details</legend>
+                <table class="form-table">
+                  <tr>
+                    <td><label for="interviewApp">Candidate:</label></td>
+                    <td><select id="interviewApp"></select><span class="error" id="interviewAppError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="interviewDate">Date:</label></td>
+                    <td><input type="date" id="interviewDate"><span class="error" id="interviewDateError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="interviewTime">Time:</label></td>
+                    <td><input type="time" id="interviewTime"><span class="error" id="interviewTimeError"></span><span class="hint">Office hours: 09:00 - 18:00</span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="interviewMode">Mode:</label></td>
+                    <td>
+                      <select id="interviewMode">
+                        <option value="">-- Select Mode --</option>
+                        <option value="Onsite">Onsite</option>
+                        <option value="Online">Online</option>
+                        <option value="Phone">Phone</option>
+                      </select>
+                      <span class="error" id="interviewModeError"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label for="interviewer">Interviewer:</label></td>
+                    <td><input type="text" id="interviewer" placeholder="Interviewer name"><span class="error" id="interviewerError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="interviewPlace">Room / Link:</label></td>
+                    <td><input type="text" id="interviewPlace" placeholder="Room 204 or meeting link"><span class="error" id="interviewPlaceError"></span></td>
+                  </tr>
+                </table>
+              </fieldset>
+              <input type="submit" id="interviewSaveButton" class="btn btn-success" value="Schedule Interview">
+              <button type="button" class="btn btn-secondary" onclick="resetInterviewForm()">Cancel</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-wide">
+          <div class="card">
+            <h3>All Interviews</h3>
+            <div class="search-bar">
+              <input type="text" id="interviewSearch" placeholder="Search candidate, interviewer or id..." onkeyup="renderInterviews()">
+              <select id="interviewStatusFilter" onchange="renderInterviews()">
+                <option value="All">All statuses</option>
+                <option value="Scheduled">Scheduled</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+            <p class="result-count" id="interviewCount"></p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>ID</th><th>Candidate</th><th>When</th><th>Mode / Place</th><th>Interviewer</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="interviewBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    &copy; 2026 JobPortal &middot; Recruitment Manager &middot; CSC 3215 Web Technologies
+  </footer>
+
+  <script src="recruitment-manager.js"></script>
+</body>
+</html>

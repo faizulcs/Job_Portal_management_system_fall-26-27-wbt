@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shortlisted candidates on the JobPortal">
+  <title>Shortlisted Candidates | JobPortal</title>
+  <link rel="stylesheet" href="recruitment-manager.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="../login.html" class="logo">Job<span>Portal</span></a>
+    <div class="user-info">
+      <span class="badge recruiter">Recruitment Manager</span>
+      <span>Welcome, Nusrat Jahan</span>
+      <a href="../login.html" class="btn btn-small btn-light">Logout</a>
+    </div>
+  </header>
+
+  <nav class="topnav">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="applications.html">Review Applications</a>
+    <a href="shortlist.html" class="active">Shortlist</a>
+    <a href="interviews.html">Interviews</a>
+    <a href="jobs.html">Manage Jobs</a>
+  </nav>
+
+  <main class="container">
+
+    <!-- shortlist -->
+    <section id="shortlistSection" class="page-section">
+      <h2 class="page-title">Shortlisted Candidates</h2>
+      <p class="page-subtitle">Add good candidates to the shortlist, remove them, hire them, or move them to an interview.</p>
+
+      <div id="shortlistMessage" class="message"></div>
+
+      <div class="card">
+        <h3>Add to shortlist</h3>
+        <form id="shortlistForm" onsubmit="return addToShortlist()">
+          <table class="form-table">
+            <tr>
+              <td><label for="shortlistSelect">Candidate:</label></td>
+              <td>
+                <select id="shortlistSelect"></select>
+                <input type="submit" class="btn" value="Shortlist">
+                <span class="error" id="shortlistSelectError"></span>
+                <span class="hint" id="shortlistRuleHint"></span>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Shortlist (best rated first)</h3>
+        <div class="search-bar">
+          <select id="shortlistJobFilter" onchange="renderShortlist()"></select>
+        </div>
+        <p class="result-count" id="shortlistCount"></p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>#</th><th>ID</th><th>Candidate</th><th>Job</th><th>Experience</th><th>Rating</th><th>Interview</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="shortlistBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    &copy; 2026 JobPortal &middot; Recruitment Manager &middot; CSC 3215 Web Technologies
+  </footer>
+
+  <script src="recruitment-manager.js"></script>
+</body>
+</html>

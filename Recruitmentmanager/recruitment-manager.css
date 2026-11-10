@@ -1,0 +1,648 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;  /* fallback font if segoe is missing */
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333333;
+  background-color: #F4F2F8;
+}
+
+h1, h2, h3 {
+  line-height: 1.3;
+  color: #1B1F3B;
+}
+
+a {
+  color: #663399;
+}
+
+a:hover {
+  color: #8E6CC8;
+}
+
+
+/* header and nav bar */
+.header {
+  background-color: #1B1F3B;
+  color: white;
+  padding: 14px 24px;
+  display: flex;                  /* logo on the left, user info on the right */
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.logo span {
+  color: #C9A7F5;                 /* light purple part of the logo */
+}
+
+.logo:hover {
+  color: white;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+}
+
+/* nav bar stays at the top when we scroll */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 10;                    /* keeps it above the content */
+  background-color: #2B2F55;
+  padding: 0 16px;
+  overflow-x: auto;               /* scroll sideways on small screens */
+  white-space: nowrap;
+}
+
+.topnav a,
+.topnav button {
+  display: inline-block;          /* side by side but padding still works */
+  color: #F2F2F2;
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 14px 16px;
+  text-decoration: none;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: background-color 0.3s;
+}
+
+.topnav a:hover,
+.topnav button:hover {
+  background-color: #3D4270;
+  color: white;
+}
+
+/* the page we are on gets the active class (set in each html file) */
+.topnav a.active,
+.topnav button.active {
+  border-bottom: 3px solid #C9A7F5;
+  background-color: #3D4270;
+  color: white;
+}
+
+
+/* layout: container, sections, cards */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  min-height: 75vh;               /* pushes the footer down on short pages */
+}
+
+/* each page is its own html file now so the section is always visible */
+.page-section {
+  display: block;
+}
+
+.page-title {
+  margin-bottom: 4px;
+  font-size: 1.6rem;
+}
+
+.page-subtitle {
+  color: #666666;
+  margin-bottom: 20px;
+}
+
+/* white box with round corners and a light shadow */
+.card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #EEEAF5;
+}
+
+/* two columns, they wrap on small screens */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.col {
+  flex: 1;
+  min-width: 300px;
+}
+
+.col-wide {
+  flex: 2;
+  min-width: 300px;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: #777777;
+}
+
+
+/* forms */
+fieldset {
+  border: 1px solid #D8D0E8;
+  border-radius: 8px;
+  padding: 12px 16px 16px 16px;
+  margin-bottom: 16px;
+}
+
+legend {
+  font-weight: bold;
+  color: #663399;
+  padding: 0 8px;
+}
+
+.form-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.form-table td {
+  padding: 6px 4px;
+  vertical-align: top;
+}
+
+.form-table td:first-child {
+  width: 35%;
+  padding-top: 12px;
+}
+
+label {
+  font-weight: 600;
+  color: #444444;
+}
+
+/* labels next to radio buttons are not bold */
+.option-label {
+  font-weight: normal;
+  margin-right: 12px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="tel"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #C8C3D4;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background-color: white;
+}
+
+/* highlight the field that is selected */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #8E6CC8;
+  border-color: #8E6CC8;
+}
+
+textarea {
+  resize: none;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 4px;
+  accent-color: #663399;
+}
+
+/* red error text, js puts it next to the field */
+.error {
+  display: block;
+  color: #C62828;
+  font-size: 0.85rem;
+  min-height: 1em;
+}
+
+.form-buttons {
+  margin-top: 8px;
+}
+
+
+/* buttons */
+.btn {
+  display: inline-block;
+  background-color: #663399;
+  color: white;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #8E6CC8;
+  color: white;
+}
+
+.btn:focus {
+  outline: 3px solid orange;
+}
+
+.btn:disabled {
+  background-color: #BBBBBB;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #6C757D;
+}
+
+.btn-secondary:hover {
+  background-color: #868E96;
+}
+
+.btn-success {
+  background-color: #2E7D32;
+}
+
+.btn-success:hover {
+  background-color: #43A047;
+}
+
+.btn-danger {
+  background-color: #C62828;
+}
+
+.btn-danger:hover {
+  background-color: #E53935;
+}
+
+.btn-light {
+  background-color: white;
+  color: #1B1F3B;
+}
+
+.btn-light:hover {
+  background-color: #EEEAF5;
+  color: #1B1F3B;
+}
+
+.btn-small {
+  padding: 4px 12px;
+  font-size: 0.85rem;
+}
+
+
+/* tables */
+.table-wrapper {
+  overflow-x: auto;              /* wide tables scroll inside the card */
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.data-table th {
+  background-color: #663399;
+  color: white;
+  text-align: left;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid #EEEAF5;
+}
+
+/* ids and buttons stay on one line */
+.data-table td:first-child,
+.data-table td:last-child {
+  white-space: nowrap;
+}
+
+/* striped rows */
+.data-table tbody tr:nth-child(even) {
+  background-color: #FAF8FD;
+}
+
+.data-table tbody tr:hover {
+  background-color: #F0EAFA;
+}
+
+.data-table td .btn {
+  margin: 2px;
+}
+
+.empty-row {
+  text-align: center;
+  color: #888888;
+  padding: 20px;
+}
+
+/* search box and filters above a table */
+.search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.search-bar input {
+  flex: 2;
+  min-width: 200px;
+}
+
+.search-bar select {
+  flex: 1;
+  min-width: 150px;
+}
+
+.result-count {
+  font-size: 0.85rem;
+  color: #666666;
+  margin-bottom: 8px;
+}
+
+
+/* badges and messages */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: bold;
+  color: white;
+  background-color: #6C757D;
+  white-space: nowrap;
+}
+
+.badge.admin     { background-color: #C62828; }
+.badge.librarian { background-color: #1565C0; }
+.badge.student   { background-color: #2E7D32; }
+.badge.visitor   { background-color: #EF6C00; }
+
+.badge.green  { background-color: #2E7D32; }
+.badge.orange { background-color: #EF6C00; }
+.badge.red    { background-color: #C62828; }
+.badge.blue   { background-color: #1565C0; }
+.badge.grey   { background-color: #6C757D; }
+
+/* message box, hidden until js shows it */
+.message {
+  display: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  border-left: 5px solid;
+}
+
+.message.success {
+  background-color: #E8F5E9;
+  border-color: #2E7D32;
+  color: #1B5E20;
+}
+
+.message.error {
+  background-color: #FFEBEE;
+  border-color: #C62828;
+  color: #B71C1C;
+}
+
+.message.info {
+  background-color: #E3F2FD;
+  border-color: #1565C0;
+  color: #0D47A1;
+}
+
+
+/* dashboard stuff */
+
+/* stat boxes using grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-left: 6px solid #663399;
+  transition: transform 0.3s;
+}
+
+.stat-card:hover {
+  transform: scale(1.03);
+}
+
+.stat-card .stat-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1B1F3B;
+}
+
+.stat-card .stat-label {
+  color: #666666;
+  font-size: 0.9rem;
+}
+
+/* bar chart, js sets the width of each bar */
+.bar-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.bar-label {
+  width: 140px;
+  font-size: 0.9rem;
+}
+
+.bar-track {
+  flex: 1;
+  background-color: #EEEAF5;
+  border-radius: 6px;
+  height: 22px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  width: 0;
+  background-color: #663399;
+  border-radius: 6px;
+  transition: width 0.6s;
+}
+
+.bar-value {
+  width: 50px;
+  text-align: right;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* progress bar */
+.progress-track {
+  background-color: #EEEAF5;
+  border-radius: 12px;
+  height: 28px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background-color: #2E7D32;
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+  text-align: center;
+  line-height: 28px;
+  transition: width 0.6s;
+}
+
+/* notice board with a fixed height and a scroll bar */
+.notice-board {
+  height: 380px;
+  overflow-y: auto;
+  border: 1px solid #EEEAF5;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #FCFBFE;
+}
+
+.log-item {
+  background-color: white;
+  border-left: 5px solid #663399;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.log-item .log-time {
+  font-size: 0.8rem;
+  color: #888888;
+}
+
+/* result box */
+.result-box {
+  background-color: #F7F3FC;
+  border: 2px dashed #C9A7F5;
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.result-box .big {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #663399;
+}
+
+/* reminder cards */
+.reminder {
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  border-left: 8px solid #2E7D32;
+  background-color: #F1F8F1;
+}
+
+.reminder h4 {
+  margin-bottom: 2px;
+}
+
+
+/* extra things only the recruitment manager pages need */
+.logo span { color: #C9A7F5; }
+.badge.recruiter { background-color: #663399; }
+.badge.purple { background-color: #663399; }
+
+body { background: linear-gradient(180deg, #ECE7F6 0, #F4F2F8 220px); min-height: 100vh; }
+.card { border: 1px solid #EEEAF5; }
+.card h3 { display: flex; align-items: center; gap: 8px; }
+.page-title { border-left: 6px solid #663399; padding-left: 12px; }
+
+.stats-grid.five { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.stat-card.green  { border-left-color: #2E7D32; }
+.stat-card.orange { border-left-color: #EF6C00; }
+.stat-card.blue   { border-left-color: #1565C0; }
+.stat-card.red    { border-left-color: #C62828; }
+
+.two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.three-cols { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .two-cols, .three-cols { grid-template-columns: 1fr; } }
+
+.stars { color: #F5A623; letter-spacing: 2px; white-space: nowrap; }
+.stars .off { color: #D5D0E0; }
+.skill-tag {
+  display: inline-block; background: #EEEAF5; color: #4B2A7A; border-radius: 12px;
+  padding: 1px 10px; margin: 2px 4px 2px 0; font-size: 0.8rem;
+}
+
+.detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 6px 20px; }
+.detail-grid div { padding: 4px 0; border-bottom: 1px dotted #D9D2E9; font-size: 0.93rem; }
+.detail-grid b { color: #1B1F3B; }
+
+.review-hidden { display: none; }
+.upcoming-item {
+  display: flex; justify-content: space-between; gap: 10px; align-items: center;
+  background: #FCFBFE; border: 1px solid #EEEAF5; border-left: 5px solid #1565C0;
+  border-radius: 8px; padding: 8px 12px; margin-bottom: 8px;
+}
+.upcoming-item.today { border-left-color: #EF6C00; background: #FFF8F0; }
+.upcoming-item small { color: #777; display: block; }
+
+.data-table td { vertical-align: top; }
+.data-table td:last-child { white-space: nowrap; }
+.row .col { min-width: 300px; }
+textarea { min-height: 80px; resize: vertical; }
+.form-buttons-row { margin-top: 10px; }
+.btn-warning { background-color: #EF6C00; }
+.btn-warning:hover { background-color: #CF5C00; }
+.btn-info { background-color: #1565C0; }
+.btn-info:hover { background-color: #0F4F98; }
+.inline-select { width: auto; min-width: 160px; }
+
+/* footer */
+.footer {
+  background-color: #1B1F3B; color: #BBB6CC; text-align: center;
+  padding: 16px; margin-top: 30px; font-size: 0.88rem;
+}

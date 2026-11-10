@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Review job applications on the JobPortal">
+  <title>Review Applications | JobPortal</title>
+  <link rel="stylesheet" href="recruitment-manager.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="../login.html" class="logo">Job<span>Portal</span></a>
+    <div class="user-info">
+      <span class="badge recruiter">Recruitment Manager</span>
+      <span>Welcome, Nusrat Jahan</span>
+      <a href="../login.html" class="btn btn-small btn-light">Logout</a>
+    </div>
+  </header>
+
+  <nav class="topnav">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="applications.html" class="active">Review Applications</a>
+    <a href="shortlist.html">Shortlist</a>
+    <a href="interviews.html">Interviews</a>
+    <a href="jobs.html">Manage Jobs</a>
+  </nav>
+
+  <main class="container">
+
+    <!-- applications: add, edit, delete, search and the review panel -->
+    <section id="applicationSection" class="page-section">
+      <h2 class="page-title">Review Applications</h2>
+      <p class="page-subtitle">Add, edit, delete and search applications. Click Review to rate a candidate and set the status.</p>
+
+      <div id="appMessage" class="message"></div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <h3 id="appFormTitle">Add New Application</h3>
+            <form id="appForm" onsubmit="return saveApplication()">
+              <fieldset>
+                <legend>Applicant Details</legend>
+                <table class="form-table">
+                  <tr>
+                    <td><label for="appName">Full name:</label></td>
+                    <td><input type="text" id="appName" placeholder="Applicant name"><span class="error" id="appNameError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="appEmail">Email:</label></td>
+                    <td><input type="email" id="appEmail" placeholder="name@mail.com"><span class="error" id="appEmailError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="appPhone">Phone:</label></td>
+                    <td><input type="tel" id="appPhone" placeholder="01XXXXXXXXX"><span class="error" id="appPhoneError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="appJob">Job:</label></td>
+                    <td><select id="appJob"></select><span class="error" id="appJobError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="appExperience">Experience (years):</label></td>
+                    <td><input type="number" id="appExperience" min="0" max="40" placeholder="0 - 40"><span class="error" id="appExperienceError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="appEducation">Education:</label></td>
+                    <td>
+                      <select id="appEducation">
+                        <option value="">-- Select Education --</option>
+                        <option value="HSC">HSC</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="Bachelor">Bachelor</option>
+                        <option value="Master">Master</option>
+                        <option value="PhD">PhD</option>
+                      </select>
+                      <span class="error" id="appEducationError"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label for="appSalary">Expected salary (Tk):</label></td>
+                    <td><input type="number" id="appSalary" placeholder="e.g. 45000"><span class="error" id="appSalaryError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="appSkills">Skills:</label></td>
+                    <td><input type="text" id="appSkills" placeholder="comma separated, e.g. HTML, CSS"><span class="error" id="appSkillsError"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="appDate">Applied on:</label></td>
+                    <td><input type="date" id="appDate"><span class="error" id="appDateError"></span></td>
+                  </tr>
+                </table>
+              </fieldset>
+              <input type="submit" id="appSaveButton" class="btn" value="Add Application">
+              <button type="button" class="btn btn-secondary" onclick="resetAppForm()">Cancel</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-wide">
+          <div class="card">
+            <h3>All Applications</h3>
+            <div class="search-bar">
+              <input type="text" id="appSearch" placeholder="Search by name, email, skill or id..." onkeyup="renderApplications()">
+              <select id="appStatusFilter" onchange="renderApplications()">
+                <option value="All">All statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Under Review">Under Review</option>
+                <option value="Shortlisted">Shortlisted</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Hired">Hired</option>
+              </select>
+              <select id="appJobFilter" onchange="renderApplications()"></select>
+            </div>
+            <p class="result-count" id="appCount"></p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>ID</th><th>Candidate</th><th>Job</th><th>Experience</th><th>Rating</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="appTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="reviewCard">
+        <h3>Review Panel</h3>
+        <div class="result-box" id="reviewDetails">Click <strong>Review</strong> on an application to see the details here.</div>
+        <form id="reviewForm" class="review-hidden" onsubmit="return saveReview()">
+          <fieldset>
+            <legend>Your Review</legend>
+            <table class="form-table">
+              <tr>
+                <td><label for="reviewStatus">Status:</label></td>
+                <td>
+                  <select id="reviewStatus">
+                    <option value="Pending">Pending</option>
+                    <option value="Under Review">Under Review</option>
+                    <option value="Shortlisted">Shortlisted</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Hired">Hired</option>
+                  </select>
+                  <span class="error" id="reviewStatusError"></span>
+                </td>
+              </tr>
+              <tr>
+                <td><label for="reviewRating">Rating:</label></td>
+                <td>
+                  <select id="reviewRating">
+                    <option value="0">Not rated</option>
+                    <option value="1">1 - Poor</option>
+                    <option value="2">2 - Below average</option>
+                    <option value="3">3 - Good</option>
+                    <option value="4">4 - Very good</option>
+                    <option value="5">5 - Excellent</option>
+                  </select>
+                  <span class="error" id="reviewRatingError"></span>
+                  <span class="hint" id="reviewRuleHint"></span>
+                </td>
+              </tr>
+              <tr>
+                <td><label for="reviewNotes">Notes:</label></td>
+                <td><textarea id="reviewNotes" placeholder="Strengths, concerns, remarks..."></textarea><span class="error" id="reviewNotesError"></span></td>
+              </tr>
+            </table>
+          </fieldset>
+          <input type="submit" class="btn btn-success" value="Save Review">
+          <button type="button" class="btn" onclick="quickShortlist()">Shortlist</button>
+          <button type="button" class="btn btn-danger" onclick="quickReject()">Reject</button>
+          <button type="button" class="btn btn-secondary" onclick="closeReview()">Close</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    &copy; 2026 JobPortal &middot; Recruitment Manager &middot; CSC 3215 Web Technologies
+  </footer>
+
+  <script src="recruitment-manager.js"></script>
+</body>
+</html>

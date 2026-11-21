@@ -131,7 +131,7 @@ function collectData(event) {
         case "employer":
             localStorage.setItem("jpLoggedIn", foundUser.email);
             alert("Login successful! Welcome, " + foundUser.name + ".");
-            window.location.href = "Employer/Employer-Dashboard.html";
+            window.location.href = "Employer-Dashboard.html";
             break;
         case "recruiter":
         case "recruitmentmanager":

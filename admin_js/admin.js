@@ -189,6 +189,176 @@ function nextNumber(list) {
     return biggest + 1;
 }
 
+function showError(fieldId, message) {
+    document.getElementById(fieldId + "Error").innerHTML = message;
+
+    var field = document.getElementById(fieldId);
+    if (field != null) field.style.border = "2px solid red";
+}
+
+function clearError(fieldId) {
+    var error = document.getElementById(fieldId + "Error");
+    if (error != null) error.innerHTML = "";
+
+    var field = document.getElementById(fieldId);
+    if (field != null) field.style.border = "";
+}
+
+function clearErrors(fieldIds) {
+    for (var i = 0; i < fieldIds.length; i++) {
+        clearError(fieldIds[i]);
+    }
+}
+
+function getFieldLabel(field) {
+    if (field.labels != null && field.labels.length > 0) {
+        return field.labels[0].textContent.replace(":", "").trim();
+    }
+    return field.name || field.id || "This field";
+}
+
+function clearFieldValidation(event) {
+    var field = event.target;
+    if (field == null || field.id == "") return;
+    clearError(field.id);
+}
+
+function getFormValue(form, id) {
+    var field = document.getElementById(id);
+    if (field == null && form.elements[id] != null) field = form.elements[id];
+    if (field == null) return "";
+    return field.value.trim();
+}
+
+function hasRecordWithId(list, id) {
+    for (var i = 0; i < list.length; i++) {
+        if (list[i].id == id) return true;
+    }
+    return false;
+}
+
+function validateAdminForm(form, action) {
+    var isValid = true;
+    var fieldIds = [];
+    for (var i = 0; i < form.elements.length; i++) {
+        if (form.elements[i].id != "") fieldIds.push(form.elements[i].id);
+    }
+    clearErrors(fieldIds);
+
+    for (var i = 0; i < form.elements.length; i++) {
+        var field = form.elements[i];
+        if (field.type == "submit" || field.type == "reset" || field.type == "button") continue;
+
+        var fieldValue = field.value == null ? "" : field.value.trim();
+        var fieldLabel = getFieldLabel(field);
+
+        if (field.required && fieldValue == "") {
+            showError(field.id, fieldLabel + " is required.");
+            isValid = false;
+            continue;
+        }
+        if (fieldValue != "" && field.validity != null && field.validity.valid == false) {
+            if (field.type == "email") showError(field.id, "Enter a valid email address.");
+            else showError(field.id, "Enter a valid " + fieldLabel + ".");
+            isValid = false;
+        }
+    }
+
+    if (isValid == false) return false;
+
+    if (action == "addUser") {
+        var email = getFormValue(form, "newUserEmail").toLowerCase();
+        for (var u = 0; u < users.length; u++) {
+            if (users[u].email.toLowerCase() == email) {
+                showError("newUserEmail", "A user with this email already exists.");
+                return false;
+            }
+        }
+    } else if (action == "updateUser") {
+        var userId = getFormValue(form, "editUserId");
+        if (!hasRecordWithId(users, userId)) {
+            showError("editUserId", "Enter a valid user ID before updating.");
+            return false;
+        }
+        var updatedEmail = getFormValue(form, "editUserEmail").toLowerCase();
+        for (var e = 0; e < users.length; e++) {
+            if (users[e].id != userId && users[e].email.toLowerCase() == updatedEmail) {
+                showError("editUserEmail", "Another user already uses this email.");
+                return false;
+            }
+        }
+    } else if (action == "deleteUser" && !hasRecordWithId(users, getFormValue(form, "deleteUserId"))) {
+        showError("deleteUserId", "No user was found with that ID.");
+        return false;
+    } else if (action == "updateUserStatus" && !hasRecordWithId(users, getFormValue(form, "statusUserId"))) {
+        showError("statusUserId", "No user was found with that ID.");
+        return false;
+    } else if (action == "updateJob" && !hasRecordWithId(jobs, getFormValue(form, "editJobId"))) {
+        showError("editJobId", "Enter a valid job ID before updating.");
+        return false;
+    } else if (action == "deleteJob" && !hasRecordWithId(jobs, getFormValue(form, "deleteJobId"))) {
+        showError("deleteJobId", "No job was found with that ID.");
+        return false;
+    } else if (action == "reviewJob" && !hasRecordWithId(jobs, getFormValue(form, "approvalJobId"))) {
+        showError("approvalJobId", "No job was found with that ID.");
+        return false;
+    } else if (action == "addJob") {
+        var employerId = getFormValue(form, "jobEmployer");
+        var employerFound = false;
+        for (var em = 0; em < users.length; em++) {
+            if (users[em].id == employerId && users[em].type == "Employer") employerFound = true;
+        }
+        if (!employerFound) {
+            showError("jobEmployer", "Enter the ID of an existing employer.");
+            return false;
+        }
+    } else if (action == "addCategory") {
+        var categoryName = getFormValue(form, "categoryName").toLowerCase();
+        for (var c = 0; c < categories.length; c++) {
+            if (categories[c].name.toLowerCase() == categoryName) {
+                showError("categoryName", "That category already exists.");
+                return false;
+            }
+        }
+    } else if ((action == "updateCategory" || action == "deleteCategory") &&
+        !hasRecordWithId(categories, getFormValue(form, "manageCategoryId"))) {
+        showError("manageCategoryId", "Enter a valid category ID.");
+        return false;
+    } else if (action == "updateCategory" && getFormValue(form, "manageCategoryName") == "") {
+        showError("manageCategoryName", "Enter the new category name.");
+        return false;
+    } else if (action == "verifyEmployer" && !hasRecordWithId(verifications, getFormValue(form, "verifyEmployerId"))) {
+        showError("verifyEmployerId", "No employer verification record was found with that ID.");
+        return false;
+    } else if (action == "reviewFlaggedJob" && !hasRecordWithId(suspiciousJobs, getFormValue(form, "flaggedJobId"))) {
+        showError("flaggedJobId", "No flagged job was found with that ID.");
+        return false;
+    } else if (action == "reviewDuplicate" && !hasRecordWithId(duplicateJobs, getFormValue(form, "duplicateJobId"))) {
+        showError("duplicateJobId", "No duplicate-job record was found with that ID.");
+        return false;
+    }
+
+    if (action == "updateProfile") {
+        var password = getFormValue(form, "password");
+        var confirmPassword = getFormValue(form, "confirmPassword");
+        if (password != "" && password != confirmPassword) {
+            showError("confirmPassword", "The new password and confirmation do not match.");
+            return false;
+        }
+    }
+
+    if (action == "generateReport") {
+        var fromDate = getFormValue(form, "reportFrom");
+        var toDate = getFormValue(form, "reportTo");
+        if (fromDate != "" && toDate != "" && fromDate > toDate) {
+            showError("reportTo", "The end date must be on or after the start date.");
+            return false;
+        }
+    }
+
+    return true;
+}
+
 function handleForm(form, action) {
     var value = function (id) {
         var field = document.getElementById(id);
@@ -278,11 +448,17 @@ if (logoutLink != null) {
     renderSuspiciousJobs(); renderDuplicates(); renderAnnouncements(); updateDashboard();
     var forms = document.getElementsByTagName("form");
     for (var i = 0; i < forms.length; i++) {
+        // Let our JavaScript show the validation messages before a form is handled.
+        forms[i].noValidate = true;
         forms[i].addEventListener("submit", function (event) {
             event.preventDefault();
-            handleForm(this, event.submitter == null ? "" : event.submitter.name);
+            var action = event.submitter == null ? "" : event.submitter.name;
+            if (validateAdminForm(this, action) == false) return;
+            handleForm(this, action);
             updateDashboard();
         });
+        forms[i].addEventListener("input", clearFieldValidation);
+        forms[i].addEventListener("change", clearFieldValidation);
     }
 }
 

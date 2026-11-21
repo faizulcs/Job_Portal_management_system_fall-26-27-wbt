@@ -40,16 +40,16 @@
                                     <option value="jobs">Job Posting Report</option>
                                     <option value="applications">Application Report</option>
                                     <option value="employers">Employer Report</option>
-                                </select>
+                                </select><span id="reportTypeError" class="error" style="color:red; display:block;"></span>
                             </td>
                         </tr>
                         <tr>
                             <td><label for="reportFrom">From Date:</label></td>
-                            <td><input type="date" id="reportFrom" name="reportFrom"></td>
+                            <td><input type="date" id="reportFrom" name="reportFrom"><span id="reportFromError" class="error" style="color:red; display:block;"></span></td>
                         </tr>
                         <tr>
                             <td><label for="reportTo">To Date:</label></td>
-                            <td><input type="date" id="reportTo" name="reportTo"></td>
+                            <td><input type="date" id="reportTo" name="reportTo"><span id="reportToError" class="error" style="color:red; display:block;"></span></td>
                         </tr>
                         <tr>
                             <td colspan="2"><input type="submit" name="generateReport" value="Generate Report"></td>

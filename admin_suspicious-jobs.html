@@ -45,7 +45,7 @@
                 <form method="post" action="">
                     <br>
                     <label for="flaggedJobId">Flagged Job ID:</label>
-                    <input type="number" id="flaggedJobId" name="flaggedJobId" required>
+                    <input type="number" id="flaggedJobId" name="flaggedJobId" required><span id="flaggedJobIdError" class="error" style="color:red; display:block;"></span>
                     <select name="fraudDecision">
                         <option value="safe">Mark as Safe</option>
                         <option value="remove">Remove Job</option>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Verification - Job Portal Management System</title>
+    <link rel="stylesheet" href="admin_css/admin.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <p><a href="admin_dashboard.html">Dashboard</a></p>
+        <p><a href="admin_users.html">Manage Users</a></p>
+        <p><a href="admin_jobs.html">Manage Jobs</a></p>
+        <p><a href="admin_applications.html">Applications</a></p>
+        <p><a href="admin_employer-verification.html">Employer Verification</a></p>
+        <p><a href="admin_categories.html">Categories</a></p>
+        <p><a href="admin_reports.html">Reports</a></p>
+        <p><a href="admin_suspicious-jobs.html">Suspicious Jobs</a></p>
+        <p><a href="admin_duplicate-jobs.html">Duplicate Jobs</a></p>
+        <p><a href="admin_announcements.html">Announcements</a></p>
+        <p><a href="admin_profile.html">Update Profile</a></p>
+        <p><a href="admin_logout.html">Logout</a></p>
+    </div>
+
+    <div class="container">
+        <h1>Employer Verification</h1>
+        <section id="verification">
+
+            <fieldset>
+                <legend>Verify Employer Accounts</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <th>Employer ID</th>
+                            <th>Company Name</th>
+                            <th>Email</th>
+                            <th>Verification Status</th>
+                        </tr>
+                        <tr>
+                            <td colspan="4">Employer verification requests will appear here.</td>
+                        </tr>
+                    </table>
+                    <br>
+                    <label for="verifyEmployerId">Employer ID:</label>
+                    <input type="number" id="verifyEmployerId" name="verifyEmployerId" required>
+                    <select name="verificationStatus">
+                        <option value="verified">Approve / Verify</option>
+                        <option value="rejected">Reject</option>
+                    </select>
+                    <input type="submit" name="verifyEmployer" value="Submit">
+                </form>
+            </fieldset>
+        </section>
+    </div>
+
+    <script src="admin_js/data.js"></script>
+    <script src="admin_js/admin.js"></script>
+</body>
+
+</html>

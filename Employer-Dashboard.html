@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Employer dashboard for overview metrics, hiring goals, hired candidates, and announcements">
+    <title>Employer Dashboard | JobPortal</title>
+    <link rel="stylesheet" href="Employer.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Employer Portal - Dashboard</h1>
+
+        <div class="navbar">
+            <div class="nav-links">
+                <p><a href="Employer-Dashboard.html" class="active">Dashboard</a></p>
+                <p><a href="Employer-Management.html">Management</a></p>
+                <p><a href="Employer-Profile.html">Profile</a></p>
+            </div>
+            <div class="nav-logout">
+                <p><a href="login.html">LogOut</a></p>
+            </div>
+        </div>
+
+        <div id="dashboardMessage" class="message"></div>
+
+        <section>
+            <h2>Dashboard Overview</h2>
+            <fieldset>
+                <legend>Activity Summary</legend>
+                <table>
+                    <tr>
+                        <td><label for="lastLogin">Last Login:</label></td>
+                        <td><input type="text" id="lastLogin" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for="pendingReviews">Pending Reviews:</label></td>
+                        <td><input type="text" id="pendingReviews" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for="activeCampaigns">Active Campaigns:</label></td>
+                        <td><input type="text" id="activeCampaigns" readonly></td>
+                    </tr>
+                </table>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Job Statistics</h2>
+            <fieldset>
+                <legend>Metrics Overview</legend>
+                <form id="metricsForm" onsubmit="return updateMetrics()">
+                    <table>
+                        <tr>
+                            <td><label for="activeJobsCount">Active Jobs:</label></td>
+                            <td>
+                                <input type="number" id="activeJobsCount" min="0">
+                                <span class="error" id="activeJobsCountError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="totalApplicantsCount">Total Applicants:</label></td>
+                            <td>
+                                <input type="number" id="totalApplicantsCount" min="0">
+                                <span class="error" id="totalApplicantsCountError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="shortlistedCount">Shortlisted Candidates:</label></td>
+                            <td>
+                                <input type="number" id="shortlistedCount" min="0">
+                                <span class="error" id="shortlistedCountError"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" value="Update Metrics">
+                </form>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Hiring Goal</h2>
+            <fieldset>
+                <legend>My Goal</legend>
+                <form id="hiringGoalForm" onsubmit="return saveHiringGoal()">
+                    <table>
+                        <tr>
+                            <td><label for="hiringTargetCount">Candidates to hire:</label></td>
+                            <td>
+                                <input type="number" id="hiringTargetCount" min="1">
+                                <span class="error" id="hiringTargetCountError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="hiringPeriod">Time period:</label></td>
+                            <td>
+                                <select id="hiringPeriod">
+                                    <option value="This month">This month</option>
+                                    <option value="This quarter">This quarter</option>
+                                    <option value="This year">This year</option>
+                                </select>
+                                <span class="error" id="hiringPeriodError"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" value="Set Goal">
+                </form>
+
+                <h3>Progress</h3>
+                <p id="hiringProgressText"></p>
+                <div class="progress-track">
+                    <div id="hiringProgressBar" class="progress-fill">0%</div>
+                </div>
+                <p id="hiringProgressNote" class="progress-note"></p>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Candidates I Have Hired</h2>
+            <fieldset>
+                <legend>Hired List</legend>
+                <p class="helper-text">Confirmed offers count toward your hiring goal automatically. Add additional
+                    hires below.</p>
+                <ul id="hiredCandidatesList" class="hired-list"></ul>
+                <form id="hiredCandidateForm" onsubmit="return addHiredCandidate()">
+                    <input type="text" id="hiredCandidateName" placeholder="e.g. Nadia Islam">
+                    <button type="submit">Add</button>
+                    <button type="button" class="secondary-btn" onclick="removeLastHiredCandidate()">Remove
+                        last</button>
+                    <span class="error" id="hiredCandidateNameError"></span>
+                </form>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>System Announcements</h2>
+            <fieldset>
+                <legend>Notifications</legend>
+                <form id="noticeForm" onsubmit="return saveAnnouncement()">
+                    <table>
+                        <tr>
+                            <td><label for="noticeTitle">Notice Title:</label></td>
+                            <td>
+                                <input type="text" id="noticeTitle">
+                                <span class="error" id="noticeTitleError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="noticeDate">Date Posted:</label></td>
+                            <td>
+                                <input type="date" id="noticeDate">
+                                <span class="error" id="noticeDateError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="noticeDetails">Details:</label></td>
+                            <td>
+                                <textarea id="noticeDetails"></textarea>
+                                <span class="error" id="noticeDetailsError"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" value="Save Announcement">
+                </form>
+            </fieldset>
+        </section>
+
+        <footer class="portal-footer">
+            <p>&copy; 2026 JobPortal &middot; Employer Portal</p>
+        </footer>
+    </div>
+
+    <script src="Employer-Data.js"></script>
+    <script src="Employer-Dashboard.js"></script>
+</body>
+
+</html>

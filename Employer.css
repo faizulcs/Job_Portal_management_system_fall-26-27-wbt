@@ -1,0 +1,384 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Times New Roman", Times, serif;
+    background-color: white;
+    padding: 20px;
+    line-height: 20px;
+    color: black;
+}
+
+.container {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: blue;
+    padding: 10px 15px;
+    margin: 20px 0px;
+}
+
+.nav-links,
+.nav-logout {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.navbar p {
+    display: inline-block;
+    margin: 5px 10px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    background-color: darkblue;
+    color: white;
+    text-decoration: underline;
+}
+
+h1 {
+    color: blue;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+h2 {
+    color: blue;
+    font-size: 25px;
+    margin: 20px 0px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid blue;
+}
+
+h3 {
+    color: blue;
+    font-size: 20px;
+    margin: 15px 0px;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+fieldset {
+    border: 1px solid blue;
+    padding: 20px;
+    margin-bottom: 25px;
+    background-color: white;
+}
+
+legend {
+    background-color: blue;
+    padding: 5px 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0px;
+}
+
+fieldset table {
+    margin-top: 15px;
+}
+
+th {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid blue;
+}
+
+td {
+    padding: 8px;
+    border: 1px solid #b8b8b8;
+    vertical-align: top;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f6ff;
+}
+
+tr:hover {
+    background-color: #e6edff;
+}
+
+label {
+    display: inline-block;
+    color: black;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+input,
+select,
+textarea {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
+    padding: 8px;
+    margin: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+    width: 300px;
+    max-width: 100%;
+    border: 1px solid blue;
+}
+
+input[readonly],
+textarea[readonly] {
+    background-color: #eef2ff;
+    color: #111111;
+    border-color: #7a8ec7;
+    cursor: default;
+}
+
+textarea {
+    height: 100px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin: 6px;
+}
+
+input[type="submit"],
+input[type="reset"],
+button {
+    background-color: blue;
+    color: white;
+    border: 1px solid blue;
+    padding: 8px 15px;
+    font-size: 16px;
+    font-family: "Times New Roman", Times, serif;
+    cursor: pointer;
+    margin: 8px 5px;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: darkblue;
+}
+
+input[type="reset"] {
+    background-color: red;
+    border: 1px solid red;
+}
+
+input[type="reset"]:hover {
+    background-color: darkred;
+}
+
+.secondary-btn {
+    background-color: #5c6b73;
+    border-color: #5c6b73;
+}
+
+.secondary-btn:hover {
+    background-color: #434e54;
+}
+
+.helper-text {
+    font-size: 15px;
+    color: #333333;
+    margin-bottom: 12px;
+}
+
+.hired-list {
+    list-style-type: disc;
+    padding-left: 24px;
+    margin-bottom: 14px;
+}
+
+.hired-list li {
+    margin: 8px 0;
+    font-size: 17px;
+}
+
+.source-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+}
+
+.badge-primary {
+    background-color: blue;
+}
+
+.badge-secondary {
+    background-color: #5c6b73;
+}
+
+.empty-item {
+    color: #555555;
+}
+
+.action-cell {
+    white-space: nowrap;
+}
+
+.action-btn {
+    padding: 5px 10px;
+    margin: 2px 4px 2px 0;
+    font-size: 14px;
+}
+
+.delete-btn {
+    background-color: red;
+    border-color: red;
+}
+
+.delete-btn:hover {
+    background-color: darkred;
+}
+
+.progress-track {
+    width: 100%;
+    max-width: 500px;
+    background-color: #e6edff;
+    border: 1px solid blue;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress-fill {
+    width: 0%;
+    min-width: 36px;
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    padding: 4px 6px;
+}
+
+.progress-note {
+    font-size: 15px;
+    color: #333333;
+    margin-top: 6px;
+}
+
+.portal-footer {
+    background-color: blue;
+    color: white;
+    text-align: center;
+    padding: 15px 20px;
+    margin-top: 30px;
+    font-size: 16px;
+}
+
+.portal-footer p {
+    margin: 0;
+}
+
+a {
+    color: blue;
+}
+
+.error {
+    display: block;
+    color: #c62828;
+    font-size: 15px;
+    margin: 2px 5px 5px 5px;
+}
+
+.message {
+    display: none;
+    padding: 12px 15px;
+    margin: 15px 0px;
+    font-size: 16px;
+    border: 1px solid blue;
+}
+
+.message.success {
+    background-color: #e8f5e9;
+    border-color: #2e7d32;
+    color: #1b5e20;
+}
+
+.message.error {
+    background-color: #ffebee;
+    border-color: #c62828;
+    color: #b71c1c;
+}
+
+.message.info {
+    background-color: #e3f2fd;
+    border-color: #1565c0;
+    color: #0d47a1;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 8px;
+    }
+
+    .container {
+        width: auto;
+        padding: 10px;
+    }
+
+    .navbar {
+        justify-content: center;
+    }
+
+    .navbar p {
+        margin: 5px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+        width: 90%;
+    }
+}

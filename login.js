@@ -1,6 +1,6 @@
 const defaultUsers = [
-    { name: "Nusrat Jahan", email: "seeker@jobportal.com", password: "seeker123", role: "job_seeker",
-      phone: "01712345678", education: "BSc in CSE, Green University of Bangladesh",
+    { name: "Faizul", email: "seeker@jobportal.com", password: "seeker123", role: "job_seeker",
+      phone: "01712345678", education: "BSc in CSE, AIUB",
       skills: "HTML, CSS, JavaScript, PHP, MySQL", experience: "1 year internship at Pixel Lab", cv: "nusrat_cv.pdf" },
     { name: "BrightSoft HR", email: "hr@brightsoft.com", password: "employer123", role: "employer" },
     { name: "Sadia Karim", email: "recruiter@talenthub.com", password: "recruit123", role: "Recruiter" }

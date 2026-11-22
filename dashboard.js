@@ -132,11 +132,7 @@ function setupNavbar() {
                 links[i].href = "jobseekerprofile.html";
                 break;
             case "Find Jobs":
-                links[i].href = "#";
-                links[i].onclick = function () {
-                    alert("The Find Jobs page is not added to the project yet.");
-                    return false;
-                };
+                links[i].href = "jobs.html";
                 break;
             case "Logout":
                 links[i].href = "../Portal/login.html";

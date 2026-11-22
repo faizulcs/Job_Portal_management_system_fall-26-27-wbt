@@ -20,7 +20,7 @@ const reviewFields = ["reviewStatus", "reviewRating", "reviewNotes"];
 function showSection(sectionId) {
   for (let i = 0; i < sections.length; i++) {
     let section = document.getElementById(sections[i]);
-    if (section === null) { continue; }      // this page does not have that section
+    if (section == null) { continue; }      // this page does not have that section
     section.style.display = (sections[i] === sectionId) ? "block" : "none";
   }
   window.scrollTo(0, 0);

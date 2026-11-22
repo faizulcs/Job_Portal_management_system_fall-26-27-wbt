@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Jobs</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <div class="navbar">
+        <p><a href="jobseekerdashboard.html">Dashboard</a></p>
+        <p><a href="jobs.html">Find Jobs</a></p>
+        <p><a href="jobseekrapplication.html">My Applications</a></p>
+        <p><a href="jobseekerprofile.html">Update Profile</a></p>
+        <p><a href="../Portal/login.html">Logout</a></p>
+    </div>
+
+    <div class="container">
+        <h1>Find Jobs</h1>
+
+        <fieldset>
+            <legend>Filter Jobs</legend>
+            <table>
+                <tr>
+                    <td>Keyword:</td>
+                    <td><input type="text" id="searchInput" placeholder="Title, department, or location"></td>
+                </tr>
+                <tr>
+                    <td>Job Type:</td>
+                    <td>
+                        <select id="typeFilter">
+                            <option value="All">All</option>
+                            <option value="Full-Time">Full-Time</option>
+                            <option value="Part-Time">Part-Time</option>
+                            <option value="Internship">Internship</option>
+                            <option value="Contract">Contract</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    <td>
+                        <select id="statusFilter">
+                            <option value="Open">Open</option>
+                            <option value="All">All</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <button type="button" id="filterBtn">Search</button>
+            <button type="button" id="clearFilterBtn">Clear</button>
+        </fieldset>
+
+        <fieldset>
+            <legend>Available Jobs</legend>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Department</th>
+                        <th>Location</th>
+                        <th>Type</th>
+                        <th>Salary</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="jobsListBody"></tbody>
+            </table>
+        </fieldset>
+    </div>
+
+    <script src="../Employer/Employer-Data.js"></script>
+    <script src="jobs.js"></script>
+</body>
+</html>

@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-
-   
+    <link rel="stylesheet" href="./Portal css/login.css">
 </head>
 
 <body>
@@ -48,9 +47,47 @@
             </fieldset>
         </form>
 
-        <p>Don't have an account? <a href="register.html">Signup</a></p>
-    </div>
+        <p>Don't have an account? <a href="Register.html">Signup</a></p>
 
+        <fieldset>
+            <legend>Sample Login Accounts</legend>
+            <p>Choose an account and click Use to fill the login form.</p>
+            <table>
+                <tr>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Option</th>
+                </tr>
+                <tr>
+                    <td>Admin</td>
+                    <td>admin@jobportal.com</td>
+                    <td>admin123</td>
+                    <td><button type="button" onclick="fillDemo('admin@jobportal.com', 'admin123')">Use</button></td>
+                </tr>
+                <tr>
+                    <td>Employer</td>
+                    <td>hr@brightsoft.com</td>
+                    <td>employer123</td>
+                    <td><button type="button" onclick="fillDemo('hr@brightsoft.com', 'employer123')">Use</button></td>
+                </tr>
+                <tr>
+                    <td>Recruitment Manager</td>
+                    <td>recruiter@talenthub.com</td>
+                    <td>recruit123</td>
+                    <td><button type="button" onclick="fillDemo('recruiter@talenthub.com', 'recruit123')">Use</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Job Seeker</td>
+                    <td>seeker@jobportal.com</td>
+                    <td>seeker123</td>
+                    <td><button type="button" onclick="fillDemo('seeker@jobportal.com', 'seeker123')">Use</button></td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <script src="./portal js/login.js"></script>
 </body>
 
 </html>

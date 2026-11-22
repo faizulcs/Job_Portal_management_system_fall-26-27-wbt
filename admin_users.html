@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - Job Portal Management System</title>
+    <link rel="stylesheet" href="admin_css/admin.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <p><a href="admin_dashboard.html">Dashboard</a></p>
+        <p><a href="admin_users.html">Manage Users</a></p>
+        <p><a href="admin_jobs.html">Manage Jobs</a></p>
+        <p><a href="admin_applications.html">Applications</a></p>
+        <p><a href="admin_employer-verification.html">Employer Verification</a></p>
+        <p><a href="admin_categories.html">Categories</a></p>
+        <p><a href="admin_reports.html">Reports</a></p>
+        <p><a href="admin_suspicious-jobs.html">Suspicious Jobs</a></p>
+        <p><a href="admin_duplicate-jobs.html">Duplicate Jobs</a></p>
+        <p><a href="admin_announcements.html">Announcements</a></p>
+        <p><a href="admin_profile.html">Update Profile</a></p>
+        <p><a href="admin_logout.html">Logout</a></p>
+    </div>
+
+    <div class="container">
+        <h1>User Management</h1>
+        <section id="users">
+
+
+            <fieldset>
+                <legend>Add New User (Create)</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <td><label for="newUserName">Full Name:</label></td>
+                            <td><input type="text" id="newUserName" name="newUserName" required><span id="newUserNameError" class="error" style="color:red; display:block;"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="newUserEmail">Email:</label></td>
+                            <td><input type="email" id="newUserEmail" name="newUserEmail" required><span id="newUserEmailError" class="error" style="color:red; display:block;"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="newUserPhone">Phone:</label></td>
+                            <td><input type="tel" id="newUserPhone" name="newUserPhone" required><span id="newUserPhoneError" class="error" style="color:red; display:block;"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="newUserType">User Type:</label></td>
+                            <td>
+                                <select id="newUserType" name="newUserType" required>
+                                    <option value="">Select User Type</option>
+                                    <option value="job_seeker">Job Seeker</option>
+                                    <option value="employer">Employer</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="recruitment_manager">Recruitment Manager</option>
+                                </select><span id="newUserTypeError" class="error" style="color:red; display:block;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="newUserPassword">Password:</label></td>
+                            <td><input type="password" id="newUserPassword" name="newUserPassword" required><span id="newUserPasswordError" class="error" style="color:red; display:block;"></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="submit" name="addUser" value="Add User">
+                                <input type="reset" value="Reset">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </fieldset>
+
+            <fieldset>
+                <legend>Users Details (Read)</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>User Type</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr>
+                            <td colspan="6">User information will appear here.</td>
+                        </tr>
+                    </table>
+                </form>
+            </fieldset>
+
+            <fieldset>
+                <legend>Update User Information (Update)</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <td><label for="editUserId">User ID:</label></td>
+                            <td><input type="number" id="editUserId" name="editUserId" required><span id="editUserIdError" class="error" style="color:red; display:block;"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="editUserName">Full Name:</label></td>
+                            <td><input type="text" id="editUserName" name="editUserName"><span id="editUserNameError" class="error" style="color:red; display:block;"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="editUserEmail">Email:</label></td>
+                            <td><input type="email" id="editUserEmail" name="editUserEmail"><span id="editUserEmailError" class="error" style="color:red; display:block;"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="editUserPhone">Phone:</label></td>
+                            <td><input type="tel" id="editUserPhone" name="editUserPhone"><span id="editUserPhoneError" class="error" style="color:red; display:block;"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="editUserType">User Type:</label></td>
+                            <td>
+                                <select id="editUserType" name="editUserType">
+                                    <option value="job_seeker">Job Seeker</option>
+                                    <option value="employer">Employer</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="recruitment_manager">Recruitment Manager</option>
+                                </select><span id="editUserTypeError" class="error" style="color:red; display:block;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="submit" name="updateUser" value="Update User"></td>
+                        </tr>
+                    </table>
+                </form>
+            </fieldset>
+
+            <fieldset>
+                <legend>Delete User (Delete)</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <td><label for="deleteUserId">User ID:</label></td>
+                            <td><input type="number" id="deleteUserId" name="deleteUserId" required><span id="deleteUserIdError" class="error" style="color:red; display:block;"></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="submit" name="deleteUser" value="Delete User"></td>
+                        </tr>
+                    </table>
+                </form>
+            </fieldset>
+
+
+            <fieldset>
+                <legend>Account Status Management</legend>
+                <form method="post" action="">
+                    <table>
+                        <tr>
+                            <td><label for="statusUserId">User ID:</label></td>
+                            <td><input type="number" id="statusUserId" name="statusUserId" required><span id="statusUserIdError" class="error" style="color:red; display:block;"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="userStatus">Account Status:</label></td>
+                            <td>
+                                <select id="userStatus" name="userStatus">
+                                    <option value="active">Active</option>
+                                    <option value="suspended">Suspended</option>
+                                </select><span id="userStatusError" class="error" style="color:red; display:block;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="submit" name="updateUserStatus" value="Update Status"></td>
+                        </tr>
+                    </table>
+                </form>
+            </fieldset>
+        </section>
+    </div>
+
+    <script src="admin_js/data.js"></script>
+    <script src="admin_js/admin.js"></script>
+</body>
+
+</html>

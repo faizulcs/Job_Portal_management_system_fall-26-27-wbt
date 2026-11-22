@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Employer management page for jobs, interview schedules, and candidate feedback">
+    <title>Employer Management | JobPortal</title>
+    <link rel="stylesheet" href="Employer.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Employer Portal - Management</h1>
+
+        <div class="navbar">
+            <div class="nav-links">
+                <p><a href="Employer-Dashboard.html">Dashboard</a></p>
+                <p><a href="Employer-Management.html" class="active">Management</a></p>
+                <p><a href="Employer-Profile.html">Profile</a></p>
+            </div>
+            <div class="nav-logout">
+                <p><a href="login.html">LogOut</a></p>
+            </div>
+        </div>
+
+        <div id="managementMessage" class="message"></div>
+
+        <section>
+            <h2>Job Postings</h2>
+            <fieldset>
+                <legend>Create / Edit Job</legend>
+                <form id="jobForm" onsubmit="return saveJob()">
+                    <table>
+                        <tr>
+                            <td><label for="jobTitle">Job Title:</label></td>
+                            <td>
+                                <input type="text" id="jobTitle">
+                                <span class="error" id="jobTitleError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobDepartment">Department:</label></td>
+                            <td>
+                                <input type="text" id="jobDepartment">
+                                <span class="error" id="jobDepartmentError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobLocation">Location:</label></td>
+                            <td>
+                                <input type="text" id="jobLocation">
+                                <span class="error" id="jobLocationError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobType">Job Type:</label></td>
+                            <td>
+                                <select id="jobType">
+                                    <option value="Full-Time">Full-Time</option>
+                                    <option value="Part-Time">Part-Time</option>
+                                    <option value="Internship">Internship</option>
+                                    <option value="Contract">Contract</option>
+                                </select>
+                                <span class="error" id="jobTypeError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobSalary">Salary / Stipend:</label></td>
+                            <td>
+                                <input type="text" id="jobSalary">
+                                <span class="error" id="jobSalaryError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobDeadline">Application Deadline:</label></td>
+                            <td>
+                                <input type="date" id="jobDeadline">
+                                <span class="error" id="jobDeadlineError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobStatus">Status:</label></td>
+                            <td>
+                                <select id="jobStatus">
+                                    <option value="Open">Open</option>
+                                    <option value="Closed">Closed</option>
+                                    <option value="Draft">Draft</option>
+                                </select>
+                                <span class="error" id="jobStatusError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="jobDescription">Description:</label></td>
+                            <td>
+                                <textarea id="jobDescription"></textarea>
+                                <span class="error" id="jobDescriptionError"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" id="jobSubmitBtn" value="Save Job">
+                    <button type="button" class="secondary-btn" onclick="resetJobForm()">Clear</button>
+                </form>
+            </fieldset>
+
+            <fieldset>
+                <legend>Posted Jobs</legend>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Department</th>
+                            <th>Location</th>
+                            <th>Type</th>
+                            <th>Salary</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="jobsTableBody"></tbody>
+                </table>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Interview Schedules</h2>
+            <fieldset>
+                <legend>Schedule / Edit Interview</legend>
+                <form id="interviewForm" onsubmit="return saveInterview()">
+                    <table>
+                        <tr>
+                            <td><label for="interviewCandidate">Candidate Name:</label></td>
+                            <td>
+                                <input type="text" id="interviewCandidate">
+                                <span class="error" id="interviewCandidateError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="interviewJob">Job Role:</label></td>
+                            <td>
+                                <input type="text" id="interviewJob">
+                                <span class="error" id="interviewJobError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="interviewDate">Date:</label></td>
+                            <td>
+                                <input type="date" id="interviewDate">
+                                <span class="error" id="interviewDateError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="interviewTime">Time:</label></td>
+                            <td>
+                                <input type="time" id="interviewTime">
+                                <span class="error" id="interviewTimeError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="interviewMode">Mode:</label></td>
+                            <td>
+                                <select id="interviewMode">
+                                    <option value="Online">Online</option>
+                                    <option value="On-Site">On-Site</option>
+                                    <option value="Phone">Phone</option>
+                                </select>
+                                <span class="error" id="interviewModeError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="interviewInterviewer">Interviewer:</label></td>
+                            <td>
+                                <input type="text" id="interviewInterviewer">
+                                <span class="error" id="interviewInterviewerError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="interviewStatus">Status:</label></td>
+                            <td>
+                                <select id="interviewStatus">
+                                    <option value="Scheduled">Scheduled</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                                <span class="error" id="interviewStatusError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="interviewNotes">Notes:</label></td>
+                            <td>
+                                <textarea id="interviewNotes"></textarea>
+                                <span class="error" id="interviewNotesError"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" id="interviewSubmitBtn" value="Save Interview">
+                    <button type="button" class="secondary-btn" onclick="resetInterviewForm()">Clear</button>
+                </form>
+            </fieldset>
+
+            <fieldset>
+                <legend>Scheduled Interviews</legend>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Candidate</th>
+                            <th>Role</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Mode</th>
+                            <th>Interviewer</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="interviewsTableBody"></tbody>
+                </table>
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Candidate Feedback</h2>
+            <fieldset>
+                <legend>Record / Edit Feedback</legend>
+                <form id="feedbackForm" onsubmit="return saveFeedback()">
+                    <table>
+                        <tr>
+                            <td><label for="feedbackCandidate">Candidate Name:</label></td>
+                            <td>
+                                <input type="text" id="feedbackCandidate">
+                                <span class="error" id="feedbackCandidateError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="feedbackStage">Evaluation Stage:</label></td>
+                            <td>
+                                <select id="feedbackStage">
+                                    <option value="Screening">Screening</option>
+                                    <option value="Technical Round">Technical Round</option>
+                                    <option value="HR Round">HR Round</option>
+                                    <option value="Final Offer">Final Offer</option>
+                                </select>
+                                <span class="error" id="feedbackStageError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="feedbackRating">Rating (1-5):</label></td>
+                            <td>
+                                <select id="feedbackRating">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <span class="error" id="feedbackRatingError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="feedbackDecision">Decision:</label></td>
+                            <td>
+                                <select id="feedbackDecision">
+                                    <option value="Selected">Selected</option>
+                                    <option value="On Hold">On Hold</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                                <span class="error" id="feedbackDecisionError"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="feedbackComments">Comments:</label></td>
+                            <td>
+                                <textarea id="feedbackComments"></textarea>
+                                <span class="error" id="feedbackCommentsError"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" id="feedbackSubmitBtn" value="Save Feedback">
+                    <button type="button" class="secondary-btn" onclick="resetFeedbackForm()">Clear</button>
+                </form>
+            </fieldset>
+
+            <fieldset>
+                <legend>Recorded Feedback</legend>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Candidate</th>
+                            <th>Stage</th>
+                            <th>Rating</th>
+                            <th>Decision</th>
+                            <th>Comments</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feedbacksTableBody"></tbody>
+                </table>
+            </fieldset>
+        </section>
+
+        <footer class="portal-footer">
+            <p>&copy; 2026 JobPortal &middot; Employer Portal</p>
+        </footer>
+    </div>
+
+    <script src="Employer-Data.js"></script>
+    <script src="Employer-Management.js"></script>
+</body>
+
+</html>

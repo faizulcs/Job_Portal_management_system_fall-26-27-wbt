@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suspicious Job Review - Job Portal Management System</title>
+    <link rel="stylesheet" href="admin_css/admin.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <p><a href="admin_dashboard.html">Dashboard</a></p>
+        <p><a href="admin_users.html">Manage Users</a></p>
+        <p><a href="admin_jobs.html">Manage Jobs</a></p>
+        <p><a href="admin_applications.html">Applications</a></p>
+        <p><a href="admin_employer-verification.html">Employer Verification</a></p>
+        <p><a href="admin_categories.html">Categories</a></p>
+        <p><a href="admin_reports.html">Reports</a></p>
+        <p><a href="admin_suspicious-jobs.html">Suspicious Jobs</a></p>
+        <p><a href="admin_duplicate-jobs.html">Duplicate Jobs</a></p>
+        <p><a href="admin_announcements.html">Announcements</a></p>
+        <p><a href="admin_profile.html">Update Profile</a></p>
+        <p><a href="admin_logout.html">Logout</a></p>
+    </div>
+
+    <div class="container">
+        <h1>Suspicious Job Review</h1>
+        <section id="fraud-review">
+
+            <fieldset>
+                <legend>Review Flagged Job Posts</legend>
+                <table>
+                    <tr>
+                        <th>Job ID</th>
+                        <th>Job Title</th>
+                        <th>Employer</th>
+                        <th>Flag Reason</th>
+                        <th>Review Status</th>
+                    </tr>
+                    <tr>
+                        <td colspan="5">Flagged job postings will appear here.</td>
+                    </tr>
+                </table>
+                <form method="post" action="">
+                    <br>
+                    <label for="flaggedJobId">Flagged Job ID:</label>
+                    <input type="number" id="flaggedJobId" name="flaggedJobId" required><span id="flaggedJobIdError" class="error" style="color:red; display:block;"></span>
+                    <select name="fraudDecision">
+                        <option value="safe">Mark as Safe</option>
+                        <option value="remove">Remove Job</option>
+                        <option value="investigate">Investigate Further</option>
+                    </select>
+                    <input type="submit" name="reviewFlaggedJob" value="Review Job">
+                </form>
+            </fieldset>
+        </section>
+    </div>
+
+    <script src="admin_js/data.js"></script>
+    <script src="admin_js/admin.js"></script>
+</body>
+
+</html>

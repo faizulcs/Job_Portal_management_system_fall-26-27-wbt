@@ -123,13 +123,13 @@ function setupNavbar() {
 
         switch (text) {
             case "Dashboard":
-                links[i].href = "jobseekerdashboard.html";
+                links[i].href = "dashboard.html";
                 break;
             case "My Applications":
-                links[i].href = "jobseekrapplication.html";
+                links[i].href = "application.html";
                 break;
             case "Update Profile":
-                links[i].href = "jobseekerprofile.html";
+                links[i].href = "profile.html";
                 break;
             case "Find Jobs":
                 links[i].href = "jobs.html";

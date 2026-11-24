@@ -1,258 +1,164 @@
 /* =====================================================================
-   jobs.js  -  Find Jobs Page (jobs.html)
+   jobs.js  -  Find Jobs (jobs.html)
    ---------------------------------------------------------------------
-   1. Checks that a job seeker is logged in (otherwise back to Login).
-   2. Sets up the navbar links.
-   3. Loads jobs saved by Employer-Management.js from localStorage.
-   4. Filters jobs and saves new applications to "jpApplications"
-      with status "Pending" so jobseekerdashboard.html counts them.
+   1. The jobs are the ones the EMPLOYER added in Employer-Management
+      (getEmployerJobs() in data.js). Draft jobs are not shown.
+   2. renderJobs() loops over the jobs and builds the table rows. Rows
+      that do not match the keyword / job type / status are skipped.
+   3. The Search, Clear buttons and the filters call renderJobs().
+   4. applyJob() checks the rules, then push()es a new object into the
+      applications array with the status "Pending" and saves it.
+
+   The PHP backend will use SELECT ... LIKE ? and INSERT instead.
    ===================================================================== */
 
-const EMPLOYER_STORAGE_KEY = "jobportal_employer_management";
-const APPLICATIONS_KEY = "jpApplications";
 
-let currentSeeker = null;
+// A job is really open only when its status is Open AND the deadline has not passed
+function getJobStatus(job) {
+  if (job.status === "Closed") {
+    return "Closed";
+  }
+  if (daysBetween(todayString(), job.deadline) < 0) {
+    return "Closed";
+  }
+  return "Open";
+}
 
-window.addEventListener("load", function () {
-    setupNavbar();
-
-    currentSeeker = getLoggedInUser();
-    if (currentSeeker === null) {
-        return;
+// true when this job seeker already has an application for this job
+function alreadyApplied(job) {
+  for (const app of applications) {
+    if (app.jobTitle === job.title && app.department === job.department) {
+      return true;
     }
-
-    document.getElementById("filterBtn").addEventListener("click", renderJobs);
-    document.getElementById("clearFilterBtn").addEventListener("click", clearFilters);
-    document.getElementById("searchInput").addEventListener("input", renderJobs);
-    document.getElementById("typeFilter").addEventListener("change", renderJobs);
-    document.getElementById("statusFilter").addEventListener("change", renderJobs);
-
-    renderJobs();
-});
-
-
-/* ---------------------------------------------------------------------
-   LOAD EMPLOYER JOBS
-   Employer-Management.js saves { jobs, interviews, feedbacks } under
-   "jobportal_employer_management".
-   --------------------------------------------------------------------- */
-function getEmployerJobs() {
-    let text = localStorage.getItem(EMPLOYER_STORAGE_KEY);
-    if (text === null) {
-        if (typeof defaultEmployerData !== "undefined" && Array.isArray(defaultEmployerData.jobs)) {
-            localStorage.setItem(EMPLOYER_STORAGE_KEY, JSON.stringify(defaultEmployerData));
-            return defaultEmployerData.jobs;
-        }
-        return [];
-    }
-
-    let data = JSON.parse(text);
-    if (!data || !Array.isArray(data.jobs)) {
-        return [];
-    }
-
-    return data.jobs;
+  }
+  return false;
 }
 
 
 /* ---------------------------------------------------------------------
-   CHECK IF ALREADY APPLIED
-   --------------------------------------------------------------------- */
-function alreadyApplied(job, applications) {
-    for (const app of applications) {
-        if (
-            app.email === currentSeeker.email &&
-            app.jobTitle === job.title &&
-            app.department === job.department
-        ) {
-            return true;
-        }
-    }
-    return false;
-}
-
-
-/* ---------------------------------------------------------------------
-   CLEAR FILTERS
-   --------------------------------------------------------------------- */
-function clearFilters() {
-    document.getElementById("searchInput").value = "";
-    document.getElementById("typeFilter").value = "All";
-    document.getElementById("statusFilter").value = "Open";
-    renderJobs();
-}
-
-
-/* ---------------------------------------------------------------------
-   RENDER JOBS TABLE
+   READ + SEARCH: build the table rows
    --------------------------------------------------------------------- */
 function renderJobs() {
-    let tbody = document.getElementById("jobsListBody");
-    let jobs = getEmployerJobs();
-    let applications = loadList(APPLICATIONS_KEY);
+  let jobs = getEmployerJobs();
+  let keyword = document.getElementById("searchInput").value.trim();
+  let jobType = document.getElementById("typeFilter").value;
+  let statusFilter = document.getElementById("statusFilter").value;
 
-    let keyword = document.getElementById("searchInput").value.trim().toLowerCase();
-    let jobType = document.getElementById("typeFilter").value;
-    let statusFilter = document.getElementById("statusFilter").value;
+  let rows = "";
+  let shown = 0;
 
-    let rows = "";
+  for (let i = 0; i < jobs.length; i++) {
+    let job = jobs[i];
 
-    for (let i = 0; i < jobs.length; i++) {
-        let job = jobs[i];
-        if (!job || job.status === "Draft") {
-            continue;
-        }
-
-        if (statusFilter !== "All" && job.status !== statusFilter) {
-            continue;
-        }
-
-        if (jobType !== "All" && job.type !== jobType) {
-            continue;
-        }
-
-        let text = (
-            (job.title || "") + " " +
-            (job.department || "") + " " +
-            (job.location || "") + " " +
-            (job.description || "")
-        ).toLowerCase();
-
-        if (keyword !== "" && !text.includes(keyword)) {
-            continue;
-        }
-
-        let actionHtml = "";
-        if (alreadyApplied(job, applications)) {
-            actionHtml = "Applied";
-        } else if (job.status !== "Open") {
-            actionHtml = "Closed";
-        } else {
-            actionHtml = "<button type='button' onclick='applyJob(" + i + ")'>Apply</button>";
-        }
-
-        rows += "<tr>" +
-                    "<td>" + job.title + "</td>" +
-                    "<td>" + job.department + "</td>" +
-                    "<td>" + job.location + "</td>" +
-                    "<td>" + job.type + "</td>" +
-                    "<td>" + job.salary + "</td>" +
-                    "<td>" + job.deadline + "</td>" +
-                    "<td>" + job.status + "</td>" +
-                    "<td>" + job.description + "</td>" +
-                    "<td>" + actionHtml + "</td>" +
-                "</tr>";
+    // The Employer's drafts are not published yet
+    if (job.status === "Draft") {
+      continue;
     }
 
-    if (rows === "") {
-        rows = "<tr><td colspan='9'>No jobs found.</td></tr>";
-    }
+    let status = getJobStatus(job);
 
-    tbody.innerHTML = rows;
+    let matchesKeyword = containsText(job.title, keyword) || containsText(job.department, keyword) ||
+                         containsText(job.location, keyword) || containsText(job.description, keyword);
+    let matchesType = (jobType === "All" || job.type === jobType);
+    let matchesStatus = (statusFilter === "All" || status === statusFilter);
+
+    if (matchesKeyword && matchesType && matchesStatus) {
+      // What the Action column shows
+      let action;
+      if (alreadyApplied(job)) {
+        action = "<span style='color: green; font-weight: bold;'>Applied</span>";
+      } else if (status === "Closed") {
+        action = "<span style='color: grey;'>Closed</span>";
+      } else {
+        action = "<button type='button' onclick='applyJob(" + i + ")'>Apply</button>";
+      }
+
+      let statusColor = (status === "Open") ? "green" : "red";
+
+      rows += "<tr>" +
+                "<td><strong>" + safe(job.title) + "</strong></td>" +
+                "<td>" + safe(job.department) + "</td>" +
+                "<td>" + safe(job.location) + "</td>" +
+                "<td>" + safe(job.type) + "</td>" +
+                "<td>" + safe(job.salary) + "</td>" +
+                "<td>" + safe(job.deadline) + "</td>" +
+                "<td style='color: " + statusColor + "; font-weight: bold;'>" + status + "</td>" +
+                "<td>" + safe(job.description) + "</td>" +
+                "<td>" + action + "</td>" +
+              "</tr>";
+      shown++;
+    }
+  }
+
+  if (shown === 0) {
+    rows = "<tr><td colspan='9' style='text-align: center; color: grey;'>No jobs match your search.</td></tr>";
+  }
+
+  document.getElementById("jobsListBody").innerHTML = rows;
+  document.getElementById("jobCount").innerHTML = shown + " job(s) found";
+}
+
+
+// The Clear button: back to the starting filters
+function clearFilters() {
+  document.getElementById("searchInput").value = "";
+  document.getElementById("typeFilter").value = "All";
+  document.getElementById("statusFilter").value = "Open";
+  hideMessage("jobMessage");
+  renderJobs();
 }
 
 
 /* ---------------------------------------------------------------------
-   APPLY FOR A JOB
-   Saves to "jpApplications" with status "Pending".
+   CREATE: apply for a job
    --------------------------------------------------------------------- */
 function applyJob(index) {
-    let jobs = getEmployerJobs();
-    let job = jobs[index];
+  let jobs = getEmployerJobs();
+  let job = jobs[index];
 
-    if (!job || job.status !== "Open") {
-        alert("This job is not open.");
-        return;
-    }
-
-    let applications = loadList(APPLICATIONS_KEY);
-    if (alreadyApplied(job, applications)) {
-        alert("You already applied for this job.");
-        return;
-    }
-
-    let employerDataText = localStorage.getItem(EMPLOYER_STORAGE_KEY);
-    let employerData = employerDataText ? JSON.parse(employerDataText) : null;
-    let companyName = (employerData && employerData.companyName) ? employerData.companyName : job.department;
-    let today = new Date().toISOString().slice(0, 10);
-
-    let newApp = {
-        id: "A-" + Date.now(),
-        email: currentSeeker.email,
-        name: currentSeeker.name,
-        jobTitle: job.title,
-        company: companyName,
-        department: job.department,
-        location: job.location,
-        type: job.type,
-        salary: job.salary,
-        status: "Pending",
-        appliedDate: today,
-        date: today
-    };
-
-    applications.push(newApp);
-    localStorage.setItem(APPLICATIONS_KEY, JSON.stringify(applications));
-
-    alert("Application submitted for " + job.title + ".");
+  if (job === undefined || job.status === "Draft") {
+    showMessage("jobMessage", "This job is not available any more.", "error");
     renderJobs();
+    return;
+  }
+
+  if (getJobStatus(job) !== "Open") {
+    showMessage("jobMessage", "This job is closed. You cannot apply.", "error");
+    return;
+  }
+
+  if (alreadyApplied(job)) {
+    showMessage("jobMessage", "You already applied for this job.", "error");
+    return;
+  }
+
+  // A job seeker must have a CV in the profile before applying
+  if (currentSeeker.cv === "") {
+    showMessage("jobMessage", "Please upload your CV in Update Profile before you apply.", "error");
+    return;
+  }
+
+  let newApplication = {
+    id: nextId("A", loadList(APPLICATIONS_KEY, [])),
+    email: currentSeeker.email,
+    name: currentSeeker.name,
+    jobTitle: job.title,
+    department: job.department,
+    company: getCompanyName(),
+    appliedDate: todayString(),
+    status: "Pending"
+  };
+
+  applications.push(newApplication);
+  saveApplications();                  // keep it for the other pages
+  console.log("New application:", newApplication);
+
+  showMessage("jobMessage", "Application " + newApplication.id + " for <strong>" + safe(job.title) + "</strong> was sent.", "success");
+  renderJobs();
 }
 
 
 /* =====================================================================
-   HELPER FUNCTIONS (same as dashboard.js)
+   START
    ===================================================================== */
-
-function loadList(key) {
-    let text = localStorage.getItem(key);
-    if (text === null) {
-        return [];
-    }
-    return JSON.parse(text);
-}
-
-function getLoggedInUser() {
-    let email = localStorage.getItem("jpLoggedIn");
-    let users = loadList("jpUsers");
-
-    for (const user of users) {
-        if (email !== null && user.email === email && user.role === "job_seeker") {
-            return user;
-        }
-    }
-
-    alert("Please login first.");
-    window.location.href = "../Portal/login.html";
-    return null;
-}
-
-function setupNavbar() {
-    let links = document.querySelectorAll(".navbar a");
-
-    for (let i = 0; i < links.length; i++) {
-        let text = links[i].innerHTML.trim();
-
-        switch (text) {
-            case "Dashboard":
-                links[i].href = "jobseekerdashboard.html";
-                break;
-            case "Find Jobs":
-                links[i].href = "jobs.html";
-                break;
-            case "My Applications":
-                links[i].href = "jobseekrapplication.html";
-                break;
-            case "Update Profile":
-                links[i].href = "jobseekerprofile.html";
-                break;
-            case "Logout":
-                links[i].href = "../Portal/login.html";
-                links[i].onclick = function () {
-                    localStorage.removeItem("jpLoggedIn");
-                    alert("You have logged out.");
-                    return true;
-                };
-                break;
-        }
-    }
-}
+renderJobs();

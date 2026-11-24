@@ -1,4 +1,149 @@
 /* =====================================================================
+   jobs.js - Find Jobs
+   1. Displays available jobs.
+   2. Searches by keyword and filters by job type and status.
+   3. A job seeker can apply once for each open job.
+   ===================================================================== */
+
+function containsText(value, keyword) {
+    return String(value).toLowerCase().includes(keyword.toLowerCase());
+}
+
+function getJobStatus(job) {
+    if (job.status === "Closed") {
+        return "Closed";
+    }
+
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let deadline = new Date(job.deadline + "T00:00:00");
+
+    if (deadline < today) {
+        return "Closed";
+    }
+
+    return "Open";
+}
+
+function alreadyApplied(job) {
+    for (let i = 0; i < seekerApplications.length; i++) {
+        let application = seekerApplications[i];
+
+        if (application.email === currentSeeker.email && application.jobId === job.id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function renderJobs() {
+    let keyword = document.getElementById("searchInput").value.trim();
+    let jobType = document.getElementById("typeFilter").value;
+    let statusFilter = document.getElementById("statusFilter").value;
+
+    let rows = "";
+    let shown = 0;
+
+    for (let i = 0; i < seekerJobs.length; i++) {
+        let job = seekerJobs[i];
+        let status = getJobStatus(job);
+
+        let matchesKeyword = containsText(job.title, keyword) ||
+                             containsText(job.company, keyword) ||
+                             containsText(job.department, keyword) ||
+                             containsText(job.location, keyword);
+
+        let matchesType = (jobType === "All" || job.type === jobType);
+        let matchesStatus = (statusFilter === "All" || status === statusFilter);
+
+        if (matchesKeyword && matchesType && matchesStatus) {
+            let action;
+
+            if (alreadyApplied(job)) {
+                action = "<span style='color:green; font-weight:bold;'>Applied</span>";
+            } else if (status === "Closed") {
+                action = "<span style='color:grey;'>Closed</span>";
+            } else {
+                action = "<button type='button' class='btn' onclick='applyJob(" + i + ")'>Apply</button>";
+            }
+
+            let statusColor = status === "Open" ? "green" : "red";
+
+            rows += "<tr>" +
+                    "<td>" + job.title + "</td>" +
+                    "<td>" + job.company + "</td>" +
+                    "<td>" + job.department + "</td>" +
+                    "<td>" + job.location + "</td>" +
+                    "<td>" + job.type + "</td>" +
+                    "<td>" + job.salary + "</td>" +
+                    "<td>" + job.deadline + "</td>" +
+                    "<td style='color:" + statusColor + "; font-weight:bold;'>" + status + "</td>" +
+                    "<td>" + action + "</td>" +
+                    "</tr>";
+            shown++;
+        }
+    }
+
+    if (shown === 0) {
+        rows = "<tr><td colspan='9' class='empty-row'>No jobs match your search.</td></tr>";
+    }
+
+    document.getElementById("jobsListBody").innerHTML = rows;
+    document.getElementById("jobCount").innerHTML = shown + " job(s) found.";
+}
+
+function clearFilters() {
+    document.getElementById("searchInput").value = "";
+    document.getElementById("typeFilter").value = "All";
+    document.getElementById("statusFilter").value = "Open";
+    document.getElementById("jobMessage").innerHTML = "";
+    renderJobs();
+}
+
+function applyJob(index) {
+    let job = seekerJobs[index];
+
+    if (job === undefined || getJobStatus(job) !== "Open") {
+        document.getElementById("jobMessage").innerHTML = "This job is not available.";
+        renderJobs();
+        return;
+    }
+
+    if (alreadyApplied(job)) {
+        document.getElementById("jobMessage").innerHTML = "You have already applied for this job.";
+        return;
+    }
+
+    if (currentSeeker.cv === "") {
+        document.getElementById("jobMessage").innerHTML = "Please upload your CV in Update Profile before applying.";
+        return;
+    }
+
+    let newApplication = {
+        id: "A-" + String(seekerApplications.length + 1).padStart(3, "0"),
+        jobId: job.id,
+        email: currentSeeker.email,
+        jobTitle: job.title,
+        company: job.company,
+        appliedDate: todayString(),
+        status: "Pending"
+    };
+
+    seekerApplications.push(newApplication);
+    document.getElementById("jobMessage").innerHTML = "Your application for " + job.title + " was submitted.";
+    renderJobs();
+}
+
+function todayString() {
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = String(today.getMonth() + 1).padStart(2, "0");
+    let day = String(today.getDate()).padStart(2, "0");
+    return year + "-" + month + "-" + day;
+}
+
+renderJobs();
+/* =====================================================================
    profile.js - Job Seeker Profile
    1. Fills the form with the current user's information.
    2. Validates and updates the profile.

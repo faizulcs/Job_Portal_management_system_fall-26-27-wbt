@@ -14,23 +14,25 @@
         <p><a href="jobs.html">Find Jobs</a></p>
         <p><a href="jobseekrapplication.html">My Applications</a></p>
         <p><a href="jobseekerprofile.html">Update Profile</a></p>
-        <p><a href="../Portal/login.html">Logout</a></p>
+        <p><a href="#" onclick="return logout()">Logout</a></p>
     </div>
 
     <div class="container">
         <h1>Find Jobs</h1>
+
+        <div id="jobMessage" class="message"></div>
 
         <fieldset>
             <legend>Filter Jobs</legend>
             <table>
                 <tr>
                     <td>Keyword:</td>
-                    <td><input type="text" id="searchInput" placeholder="Title, department, or location"></td>
+                    <td><input type="text" id="searchInput" placeholder="Title, company, department, or location" onkeyup="renderJobs()"></td>
                 </tr>
                 <tr>
                     <td>Job Type:</td>
                     <td>
-                        <select id="typeFilter">
+                        <select id="typeFilter" onchange="renderJobs()">
                             <option value="All">All</option>
                             <option value="Full-Time">Full-Time</option>
                             <option value="Part-Time">Part-Time</option>
@@ -42,7 +44,7 @@
                 <tr>
                     <td>Status:</td>
                     <td>
-                        <select id="statusFilter">
+                        <select id="statusFilter" onchange="renderJobs()">
                             <option value="Open">Open</option>
                             <option value="All">All</option>
                             <option value="Closed">Closed</option>
@@ -50,12 +52,13 @@
                     </td>
                 </tr>
             </table>
-            <button type="button" id="filterBtn">Search</button>
-            <button type="button" id="clearFilterBtn">Clear</button>
+            <button type="button" id="filterBtn" onclick="renderJobs()">Search</button>
+            <button type="button" id="clearFilterBtn" onclick="clearFilters()">Clear</button>
         </fieldset>
 
         <fieldset>
             <legend>Available Jobs</legend>
+            <p id="jobCount"></p>
             <table>
                 <thead>
                     <tr>
@@ -75,7 +78,8 @@
         </fieldset>
     </div>
 
-    <script src="../Employer/Employer-Data.js"></script>
-    <script src="Javascript/recruitment-manager.js"></script>
+    <script src="data.js"></script>
+    <script src="common.js"></script>
+    <script src="jobs.js"></script>
 </body>
 </html>

@@ -1,164 +1,127 @@
 /* =====================================================================
-   jobs.js  -  Find Jobs (jobs.html)
-   ---------------------------------------------------------------------
-   1. The jobs are the ones the EMPLOYER added in Employer-Management
-      (getEmployerJobs() in data.js). Draft jobs are not shown.
-   2. renderJobs() loops over the jobs and builds the table rows. Rows
-      that do not match the keyword / job type / status are skipped.
-   3. The Search, Clear buttons and the filters call renderJobs().
-   4. applyJob() checks the rules, then push()es a new object into the
-      applications array with the status "Pending" and saves it.
-
-   The PHP backend will use SELECT ... LIKE ? and INSERT instead.
+   profile.js - Job Seeker Profile
+   1. Fills the form with the current user's information.
+   2. Validates and updates the profile.
    ===================================================================== */
 
+const profileFields = ["name", "email", "phone", "education", "skills", "experience", "cv"];
 
-// A job is really open only when its status is Open AND the deadline has not passed
-function getJobStatus(job) {
-  if (job.status === "Closed") {
-    return "Closed";
-  }
-  if (daysBetween(todayString(), job.deadline) < 0) {
-    return "Closed";
-  }
-  return "Open";
+function fillForm() {
+    document.getElementById("name").value = currentSeeker.name;
+    document.getElementById("email").value = currentSeeker.email;
+    document.getElementById("phone").value = currentSeeker.phone;
+    document.getElementById("education").value = currentSeeker.education;
+    document.getElementById("skills").value = currentSeeker.skills;
+    document.getElementById("experience").value = currentSeeker.experience;
+    document.getElementById("cv").value = "";
+    showCurrentCv();
+    clearErrors(profileFields);
 }
 
-// true when this job seeker already has an application for this job
-function alreadyApplied(job) {
-  for (const app of applications) {
-    if (app.jobTitle === job.title && app.department === job.department) {
-      return true;
-    }
-  }
-  return false;
+function showCurrentCv() {
+    let text = currentSeeker.cv === "" ? "No CV uploaded yet." : "Current CV: " + currentSeeker.cv;
+    document.getElementById("currentCv").innerHTML = text;
 }
 
+function saveProfile(event) {
+    event.preventDefault();
 
-/* ---------------------------------------------------------------------
-   READ + SEARCH: build the table rows
-   --------------------------------------------------------------------- */
-function renderJobs() {
-  let jobs = getEmployerJobs();
-  let keyword = document.getElementById("searchInput").value.trim();
-  let jobType = document.getElementById("typeFilter").value;
-  let statusFilter = document.getElementById("statusFilter").value;
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let education = document.getElementById("education").value.trim();
+    let skills = document.getElementById("skills").value.trim();
+    let experience = document.getElementById("experience").value.trim();
+    let cvFile = document.getElementById("cv").value;
 
-  let rows = "";
-  let shown = 0;
+    let isValid = true;
+    clearErrors(profileFields);
 
-  for (let i = 0; i < jobs.length; i++) {
-    let job = jobs[i];
-
-    // The Employer's drafts are not published yet
-    if (job.status === "Draft") {
-      continue;
+    if (name.length < 3 || name.length > 50) {
+        showError("name", "Name must be between 3 and 50 characters.");
+        isValid = false;
+    } else if (!/^[a-zA-Z.\s]+$/.test(name)) {
+        showError("name", "Name can only contain letters, spaces and dots.");
+        isValid = false;
     }
 
-    let status = getJobStatus(job);
-
-    let matchesKeyword = containsText(job.title, keyword) || containsText(job.department, keyword) ||
-                         containsText(job.location, keyword) || containsText(job.description, keyword);
-    let matchesType = (jobType === "All" || job.type === jobType);
-    let matchesStatus = (statusFilter === "All" || status === statusFilter);
-
-    if (matchesKeyword && matchesType && matchesStatus) {
-      // What the Action column shows
-      let action;
-      if (alreadyApplied(job)) {
-        action = "<span style='color: green; font-weight: bold;'>Applied</span>";
-      } else if (status === "Closed") {
-        action = "<span style='color: grey;'>Closed</span>";
-      } else {
-        action = "<button type='button' onclick='applyJob(" + i + ")'>Apply</button>";
-      }
-
-      let statusColor = (status === "Open") ? "green" : "red";
-
-      rows += "<tr>" +
-                "<td><strong>" + safe(job.title) + "</strong></td>" +
-                "<td>" + safe(job.department) + "</td>" +
-                "<td>" + safe(job.location) + "</td>" +
-                "<td>" + safe(job.type) + "</td>" +
-                "<td>" + safe(job.salary) + "</td>" +
-                "<td>" + safe(job.deadline) + "</td>" +
-                "<td style='color: " + statusColor + "; font-weight: bold;'>" + status + "</td>" +
-                "<td>" + safe(job.description) + "</td>" +
-                "<td>" + action + "</td>" +
-              "</tr>";
-      shown++;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError("email", "Please enter a valid email address.");
+        isValid = false;
     }
-  }
 
-  if (shown === 0) {
-    rows = "<tr><td colspan='9' style='text-align: center; color: grey;'>No jobs match your search.</td></tr>";
-  }
+    if (!/^01\d{9}$/.test(phone)) {
+        showError("phone", "Enter an 11-digit Bangladeshi phone number starting with 01.");
+        isValid = false;
+    }
 
-  document.getElementById("jobsListBody").innerHTML = rows;
-  document.getElementById("jobCount").innerHTML = shown + " job(s) found";
+    if (education.length < 2) {
+        showError("education", "Please enter your education details.");
+        isValid = false;
+    }
+
+    if (skills.length < 2) {
+        showError("skills", "Please enter your skills.");
+        isValid = false;
+    }
+
+    if (experience.length < 2) {
+        showError("experience", "Enter your experience or write Fresher.");
+        isValid = false;
+    }
+
+    if (cvFile !== "" && !/\.(pdf|doc|docx)$/i.test(cvFile)) {
+        showError("cv", "CV must be a PDF, DOC or DOCX file.");
+        isValid = false;
+    }
+
+    if (isValid === false) {
+        return false;
+    }
+
+    currentSeeker.name = name;
+    currentSeeker.email = email;
+    currentSeeker.phone = phone;
+    currentSeeker.education = education;
+    currentSeeker.skills = skills;
+    currentSeeker.experience = experience;
+
+    if (cvFile !== "") {
+        let fileParts = cvFile.split("\\");
+        currentSeeker.cv = fileParts[fileParts.length - 1];
+    }
+
+    for (let i = 0; i < seekerApplications.length; i++) {
+        if (seekerApplications[i].email === oldEmail) {
+            seekerApplications[i].email = email;
+        }
+    }
+
+    document.getElementById("profileMessage").innerHTML = "Your profile was updated successfully.";
+    showCurrentCv();
+    return false;
 }
 
-
-// The Clear button: back to the starting filters
-function clearFilters() {
-  document.getElementById("searchInput").value = "";
-  document.getElementById("typeFilter").value = "All";
-  document.getElementById("statusFilter").value = "Open";
-  hideMessage("jobMessage");
-  renderJobs();
+function showError(fieldId, message) {
+    document.getElementById(fieldId + "Error").innerHTML = message;
+    document.getElementById(fieldId).style.border = "2px solid red";
 }
 
+function clearErrors(fields) {
+    for (let i = 0; i < fields.length; i++) {
+        let field = document.getElementById(fields[i]);
+        let error = document.getElementById(fields[i] + "Error");
 
-/* ---------------------------------------------------------------------
-   CREATE: apply for a job
-   --------------------------------------------------------------------- */
-function applyJob(index) {
-  let jobs = getEmployerJobs();
-  let job = jobs[index];
+        if (error !== null) {
+            error.innerHTML = "";
+        }
 
-  if (job === undefined || job.status === "Draft") {
-    showMessage("jobMessage", "This job is not available any more.", "error");
-    renderJobs();
-    return;
-  }
-
-  if (getJobStatus(job) !== "Open") {
-    showMessage("jobMessage", "This job is closed. You cannot apply.", "error");
-    return;
-  }
-
-  if (alreadyApplied(job)) {
-    showMessage("jobMessage", "You already applied for this job.", "error");
-    return;
-  }
-
-  // A job seeker must have a CV in the profile before applying
-  if (currentSeeker.cv === "") {
-    showMessage("jobMessage", "Please upload your CV in Update Profile before you apply.", "error");
-    return;
-  }
-
-  let newApplication = {
-    id: nextId("A", loadList(APPLICATIONS_KEY, [])),
-    email: currentSeeker.email,
-    name: currentSeeker.name,
-    jobTitle: job.title,
-    department: job.department,
-    company: getCompanyName(),
-    appliedDate: todayString(),
-    status: "Pending"
-  };
-
-  applications.push(newApplication);
-  saveApplications();                  // keep it for the other pages
-  console.log("New application:", newApplication);
-
-  showMessage("jobMessage", "Application " + newApplication.id + " for <strong>" + safe(job.title) + "</strong> was sent.", "success");
-  renderJobs();
+        if (field !== null) {
+            field.style.border = "";
+        }
+    }
 }
 
-
-/* =====================================================================
-   START
-   ===================================================================== */
-renderJobs();
+let oldEmail = currentSeeker.email;
+document.getElementById("profileForm").addEventListener("submit", saveProfile);
+fillForm();
